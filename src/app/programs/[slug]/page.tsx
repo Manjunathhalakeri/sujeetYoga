@@ -262,7 +262,8 @@ export default async function ProgramDetailPage({
           <div className="gap-block grid lg:grid-cols-12 lg:gap-x-10">
             <div className="lg:col-span-7">
               <Reveal>
-                <h2 className="text-display-1 font-display optical-left text-ivory max-w-[14ch] text-balance">
+                {/* display-2: the page h1 is already display-1. */}
+                <h2 className="text-display-2 font-display optical-left text-ivory max-w-[16ch] text-balance">
                   Begin where you are.
                 </h2>
                 <div className="mt-11 flex flex-wrap items-center gap-4">

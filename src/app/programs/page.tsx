@@ -81,10 +81,16 @@ export default function ProgramsIndexPage() {
                     <span className="text-eyebrow nums-tabular block text-stone-400">
                       {program.index}
                     </span>
+                    {/* A real <h2>, not a styled span. This is the index page
+                        for programmes, so each programme must appear in the
+                        document outline — otherwise screen-reader heading
+                        navigation skips straight from the page title to the
+                        closing CTA, and the page has no structure. A heading
+                        inside an anchor is valid flow content in HTML5. */}
                     <span className="mt-3 flex items-start justify-between gap-4">
-                      <span className="text-display-2 font-display group-hover:text-moss transition-colors">
+                      <h2 className="text-display-2 font-display group-hover:text-moss transition-colors">
                         {program.title}
-                      </span>
+                      </h2>
                       <ArrowUpRight
                         size={22}
                         strokeWidth={1.5}
@@ -116,7 +122,11 @@ export default function ProgramsIndexPage() {
       <Section surface="alt" spacing="loose">
         <Container>
           <Reveal className="lg:w-8/12">
-            <h2 className="text-display-1 font-display optical-left max-w-[15ch] text-balance">
+            {/* display-2, not display-1. On interior pages the page title is
+                itself display-1, so a display-1 closing CTA tied with the h1
+                and flattened the hierarchy. The homepage can use display-1
+                here only because its hero sits a step above at --text-hero. */}
+            <h2 className="text-display-2 font-display optical-left max-w-[17ch] text-balance">
               Not sure which one fits?
             </h2>
             <p className="text-lead text-stone mt-7 max-w-[40ch]">

@@ -188,7 +188,11 @@ export default function AboutPage() {
         <Container>
           <div className="lg:w-8/12">
             <Reveal>
-              <h2 className="text-display-1 font-display optical-left max-w-[14ch] text-balance">
+              {/* display-2, not display-1. On interior pages the page title is
+                  itself display-1, so a display-1 closing CTA tied with the h1
+                  and flattened the hierarchy. The homepage can use display-1
+                  here only because its hero sits a step above at --text-hero. */}
+              <h2 className="text-display-2 font-display optical-left max-w-[16ch] text-balance">
                 {about.cta.heading}
               </h2>
               <p className="text-lead text-stone mt-7 max-w-[40ch]">{about.cta.lead}</p>
