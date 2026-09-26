@@ -70,7 +70,7 @@ export function Header() {
       <Container className="flex h-[var(--header-h)] items-center justify-between gap-6">
         <Link
           href="/"
-          className="text-h4 font-display rounded-xs tracking-[-0.01em] whitespace-nowrap"
+          className="text-h4 font-display tap-44 rounded-xs tracking-[-0.01em] whitespace-nowrap"
           aria-label={`${siteConfig.name} — home`}
         >
           {siteConfig.wordmark.lead}

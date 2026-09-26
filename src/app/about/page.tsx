@@ -157,9 +157,12 @@ export default function AboutPage() {
 
             <div className="lg:col-span-4 lg:col-start-9">
               <Reveal delay={0.08}>
-                <h3 className="text-eyebrow text-moss-200 uppercase">
+                {/* Same treatment as the programme details rail: the outline
+                    heading is hidden, the visible label is not a heading. */}
+                <h3 className="sr-only">Training and credentials</h3>
+                <p aria-hidden="true" className="text-eyebrow text-moss-200 uppercase">
                   Training &amp; credentials
-                </h3>
+                </p>
                 {hasCredentials ? (
                   <ul className="mt-5 space-y-3">
                     {[...about.credentials, ...about.training].map((c) => (

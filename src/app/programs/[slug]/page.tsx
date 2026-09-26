@@ -138,9 +138,17 @@ export default async function ProgramDetailPage({
             {/* Details rail — the same device used in the hero and About page. */}
             <div className="lg:col-span-4 lg:col-start-9">
               <Reveal delay={0.06}>
-                <h2 className="text-eyebrow rule-t pt-6 text-stone-400 uppercase">
+                {/* The heading that carries the document outline is hidden and
+                    properly named; the visible 12px word is an editorial label,
+                    not a heading. A 12px h2 sitting between an 84px h1 and 56px
+                    siblings was semantically convenient but structurally wrong. */}
+                <h2 className="sr-only">Programme details</h2>
+                <p
+                  aria-hidden="true"
+                  className="text-eyebrow rule-t pt-6 text-stone-400 uppercase"
+                >
                   Details
-                </h2>
+                </p>
                 <dl className="mt-5">
                   {program.details.map((d) => (
                     <div

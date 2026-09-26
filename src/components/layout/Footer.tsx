@@ -43,12 +43,15 @@ export function Footer() {
 
           <div className="lg:col-span-2 lg:col-start-7">
             <Eyebrow className="mb-5">Explore</Eyebrow>
-            <ul className="space-y-3">
+            <ul className="space-y-0 lg:space-y-3">
+              {/* Mobile: each row is a ~45px tap target (17px text + py-3.5).
+                  Desktop returns to a tight list. Measured at 17px before
+                  this, which fails a comfortable touch target. */}
               {navigation.map((item) => (
                 <li key={item.href}>
                   <TextLink
                     href={item.href}
-                    className="text-small text-stone hover:text-charcoal"
+                    className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
                   >
                     {item.label}
                   </TextLink>
@@ -59,12 +62,15 @@ export function Footer() {
 
           <div className="lg:col-span-3">
             <Eyebrow className="mb-5">Contact</Eyebrow>
-            <ul className="space-y-3">
+            <ul className="space-y-0 lg:space-y-3">
+              {/* Mobile: each row is a ~45px tap target (17px text + py-3.5).
+                  Desktop returns to a tight list. Measured at 17px before
+                  this, which fails a comfortable touch target. */}
               {hasEmail ? (
                 <li>
                   <TextLink
                     href={`mailto:${contact.email}`}
-                    className="text-small text-stone hover:text-charcoal"
+                    className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
                   >
                     {contact.email}
                   </TextLink>
@@ -78,7 +84,7 @@ export function Footer() {
                 <li>
                   <TextLink
                     href={`tel:${contact.phone}`}
-                    className="text-small text-stone hover:text-charcoal"
+                    className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
                   >
                     {contact.phone}
                   </TextLink>
@@ -88,7 +94,7 @@ export function Footer() {
                   <Badge tone="placeholder">TODO: phone</Badge>
                 </li>
               )}
-              <li className="text-small text-stone">
+              <li className="text-small text-stone py-3.5 lg:py-0">
                 {contact.address ?? <Badge tone="placeholder">TODO: address</Badge>}
               </li>
             </ul>
@@ -97,12 +103,15 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Eyebrow className="mb-5">Follow</Eyebrow>
             {socials.length > 0 ? (
-              <ul className="space-y-3">
+              <ul className="space-y-0 lg:space-y-3">
+                {/* Mobile: each row is a ~45px tap target (17px text + py-3.5).
+                  Desktop returns to a tight list. Measured at 17px before
+                  this, which fails a comfortable touch target. */}
                 {socials.map((profile) => (
                   <li key={profile.url}>
                     <TextLink
                       href={profile.url}
-                      className="text-small text-stone hover:text-charcoal"
+                      className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
                     >
                       {profile.label}
                       <span className="text-stone-400"> · {profile.handle}</span>
