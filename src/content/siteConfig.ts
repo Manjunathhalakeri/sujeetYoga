@@ -16,8 +16,12 @@
  */
 
 export const siteConfig = {
-  /** The brand is the person. TODO: confirm the correct spelling of the name
-   *  (taken from the repository name) and whether a surname should be shown. */
+  /** The brand is the person, not a studio.
+   *  Source: the client's public Instagram display name, "Sujit yoga 18"
+   *  (@sujityoga_001), supplied by the client as brand reference.
+   *  TODO: confirm how the name should appear in the wordmark, and whether a
+   *  full name, surname or honorific should be shown. No surname, legal name
+   *  or professional title is assumed here. */
   name: 'Sujit',
   /** Shown beside the wordmark in the header. TODO: confirm wording. */
   wordmarkSuffix: 'Yoga',
@@ -47,8 +51,9 @@ export const siteConfig = {
   },
 
   social: {
-    /** TODO: real profile URLs. Remove any the business does not use. */
-    instagram: null as string | null,
+    /** Supplied by the client. This is a real, verified handle — the only
+     *  externally verifiable fact currently on the site. */
+    instagram: 'https://instagram.com/sujityoga_001' as string | null,
     youtube: null as string | null,
     facebook: null as string | null,
   },

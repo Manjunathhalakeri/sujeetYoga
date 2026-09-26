@@ -13,9 +13,20 @@
  * and no outcomes — because none have been provided. Where a fact belongs, the
  * string says TODO rather than guessing at one.
  *
- * The instructor's name is taken from the repository name and is spelled
- * "Sujit" here. TODO: confirm the correct spelling and whether a full name,
- * honorific or surname should be shown.
+ * BRAND REFERENCE (supplied by the client, for direction only — NOT for
+ * publication as fact):
+ *   Instagram   @sujityoga_001
+ *   Display     "Sujit yoga 18"
+ *   Themes      Healing with yog (integration) · Yoga passionate ·
+ *               Self believe · Naturopathy therapist
+ *
+ * These themes inform TONE ONLY. None of them is rendered on the site as a
+ * qualification, title or claim, because none has been verified. In particular
+ * "naturopathy therapist" is NOT shown as a credential, and no medical or
+ * therapeutic benefit is stated anywhere on this page.
+ *
+ * TODO: confirm how the name should appear, and supply any titles the client
+ * actually wishes to claim.
  * ────────────────────────────────────────────────────────────────────────────
  */
 
@@ -103,8 +114,10 @@ export const home = {
   feed: {
     eyebrow: 'Recent',
     heading: 'From the practice.',
-    /** TODO: real handle. Until then the section links nowhere. */
-    handle: 'TODO: @instagram_handle',
+    /** Real, client-supplied handle. The section still shows PLACEHOLDER
+     *  imagery — how the feed itself is sourced (manual curation, a proper
+     *  integration, or just a link out) is an open decision. */
+    handle: '@sujityoga_001',
   },
 
   cta: {
