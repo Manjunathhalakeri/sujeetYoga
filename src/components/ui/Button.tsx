@@ -24,11 +24,13 @@ const base = cn(
   // Press feedback. Neutralised automatically under prefers-reduced-motion by
   // the blanket transition override in base.css.
   'active:translate-y-px',
-  // Disabled and loading share one visual language, so users do not have to
-  // learn two different "you cannot click this" signals.
+  // Disabled is dimmed: the action is unavailable.
   'disabled:pointer-events-none disabled:opacity-45',
   'aria-disabled:pointer-events-none aria-disabled:opacity-45',
-  'aria-busy:cursor-progress',
+  // Loading is NOT dimmed. The action is live and in progress, so it keeps full
+  // contrast and only loses interactivity — dimming it looked identical to
+  // disabled, which read as "broken" rather than "working".
+  'aria-busy:pointer-events-none aria-busy:cursor-progress aria-busy:opacity-100',
 );
 
 const sizes: Record<ButtonSize, string> = {
@@ -168,7 +170,10 @@ export function Button(props: ButtonProps) {
     <button
       {...buttonRest}
       type={type}
-      disabled={disabled ?? loading}
+      // Deliberately not `disabled` when loading: a disabled button is removed
+      // from the tab order, which would move focus unexpectedly mid-submit.
+      // aria-busy + pointer-events-none conveys it without that side effect.
+      disabled={disabled}
       aria-busy={loading || undefined}
       className={classes(shared)}
     >

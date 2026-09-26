@@ -109,7 +109,7 @@
   --spacing-gutter: clamp(1.25rem, 5vw, 3.5rem);
 
   /* ---------- layout: measures ---------- */
-  --container-copy: 34rem; /* 544px — ~62ch, optimal reading measure */
+  --container-copy: 36rem; /* 576px — ~62ch in Anek Latin at 17px */
   --container-measure: 42rem; /* 672px — wider intro copy */
   --container-page: 77.5rem; /* 1240px — default content width */
   --container-bleed: 96rem; /* 1536px — near-full-width imagery */
