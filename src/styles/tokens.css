@@ -1,0 +1,164 @@
+/* ============================================================
+   DESIGN TOKENS
+   Single source of truth for the visual language.
+   Tailwind v4 CSS-first theme: every token below becomes both a
+   CSS custom property and (where the namespace is known) a utility.
+
+   Guardrails, on purpose:
+   - Tailwind's default colour palette is CLEARED. Only brand colours exist,
+     so no stray `bg-blue-500` can ever enter the codebase.
+   - The radius scale is CLEARED down to 2px / 3px / full. Large pill-shaped
+     cards are not expressible.
+   - The shadow scale is CLEARED down to two near-invisible values. Depth is
+     communicated with hairline rules and ground-tone shifts, not glow.
+   ============================================================ */
+
+@theme {
+  /* ---------- reset Tailwind defaults we do not want ---------- */
+  --color-*: initial;
+  --font-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --blur-*: initial;
+
+  /* ---------- colour: neutrals / grounds ---------- */
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-ivory: #f6f3ee; /* default page ground */
+  --color-ivory-100: #fbf9f6; /* raised surface on ivory */
+  --color-ivory-300: #efeae2; /* alternating section ground */
+  --color-sand: #e4dcd0; /* filled dividers, inactive tracks */
+  --color-hairline: #d8d2c7; /* 1px rules on light grounds */
+
+  /* ---------- colour: type ---------- */
+  --color-charcoal: #1b1a18; /* primary type — 15.5:1 on ivory */
+  --color-charcoal-800: #2b2926; /* hover / pressed on charcoal fills */
+  --color-stone: #6e6a63; /* secondary type — 4.86:1 on ivory (AA) */
+  --color-stone-400: #9a948b; /* tertiary / decorative ONLY — not for body */
+
+  /* ---------- colour: brand green ---------- */
+  --color-moss: #3f5148; /* primary accent — 7.6:1 on ivory */
+  --color-moss-700: #35443c;
+  --color-moss-900: #232e28; /* dark section ground */
+  --color-moss-200: #a9b5ac; /* secondary type on dark — 6.6:1 on moss-900 */
+
+  /* ---------- colour: warm accent (use sparingly) ---------- */
+  --color-clay: #9e5430; /* accent type — 5.0:1 on ivory (AA) */
+  --color-clay-400: #c08a64; /* decorative rules / marks ONLY */
+
+  /* ---------- colour: state ---------- */
+  --color-success: #35604a;
+  --color-danger: #9b3a2b;
+
+  /* ---------- typography: families ---------- */
+  /* Display = Latin headings only. Body/UI = Unicode-capable superfamily. */
+  --font-display: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
+  --font-sans:
+    var(--font-anek), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---------- typography: scale ----------
+     Fluid, but every step is CAPPED so large viewports stay readable.
+     Named by role, not by size, so the scale can be retuned in one place. */
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+  --text-eyebrow--font-weight: 500;
+
+  --text-display-1: clamp(2.75rem, 6.5vw, 5.25rem); /* 44 → 84px */
+  --text-display-1--line-height: 0.98;
+  --text-display-1--letter-spacing: -0.02em;
+
+  --text-display-2: clamp(2.25rem, 4.8vw, 3.5rem); /* 36 → 56px */
+  --text-display-2--line-height: 1.04;
+  --text-display-2--letter-spacing: -0.018em;
+
+  --text-h2: clamp(1.875rem, 3.2vw, 2.625rem); /* 30 → 42px */
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.015em;
+
+  --text-h3: clamp(1.3125rem, 1.8vw, 1.625rem); /* 21 → 26px */
+  --text-h3--line-height: 1.22;
+  --text-h3--letter-spacing: -0.01em;
+
+  --text-h4: 1.125rem; /* 18px */
+  --text-h4--line-height: 1.35;
+  --text-h4--letter-spacing: -0.005em;
+
+  --text-lead: clamp(1.0625rem, 1.2vw, 1.3125rem); /* 17 → 21px */
+  --text-lead--line-height: 1.55;
+
+  --text-body: 1.0625rem; /* 17px — base reading size */
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.9375rem; /* 15px */
+  --text-small--line-height: 1.6;
+
+  --text-micro: 0.8125rem; /* 13px — captions, credits, legal */
+  --text-micro--line-height: 1.5;
+  --text-micro--letter-spacing: 0.01em;
+
+  /* ---------- spacing: section rhythm ----------
+     Fluid vertical rhythm so mobile is tight and desktop is spacious,
+     without writing a breakpoint for every section. */
+  --spacing-section: clamp(4rem, 9vw, 7.5rem);
+  --spacing-section-lg: clamp(5.5rem, 13vw, 11rem);
+  --spacing-block: clamp(1.75rem, 4vw, 3rem);
+  --spacing-gutter: clamp(1.25rem, 5vw, 3.5rem);
+
+  /* ---------- layout: measures ---------- */
+  --container-copy: 34rem; /* 544px — ~62ch, optimal reading measure */
+  --container-measure: 42rem; /* 672px — wider intro copy */
+  --container-page: 77.5rem; /* 1240px — default content width */
+  --container-bleed: 96rem; /* 1536px — near-full-width imagery */
+
+  /* ---------- radius: intentionally tiny ---------- */
+  --radius-xs: 2px; /* inputs, buttons */
+  --radius-sm: 3px;
+  --radius-full: 9999px; /* small tags and avatars only */
+
+  /* ---------- elevation: near-invisible ---------- */
+  --shadow-subtle: 0 1px 2px rgb(27 26 24 / 0.04);
+  --shadow-lifted: 0 12px 32px -18px rgb(27 26 24 / 0.16);
+
+  /* ---------- motion ---------- */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1); /* the one curve */
+  --ease-brand-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* symmetric moves only */
+
+  /* Every Tailwind `transition-*` utility inherits these, so on-brand
+     timing is the default rather than something to remember. */
+  --default-transition-duration: 220ms;
+  --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---------- breakpoints ---------- */
+  --breakpoint-xs: 26.25rem; /* 420px — small-phone refinements */
+}
+
+/* Raw values consumed by JS (lib/motion.ts) and by arbitrary utilities.
+   Kept outside @theme because they generate no utilities. */
+:root {
+  --dur-quick: 200ms;
+  --dur-base: 400ms;
+  --dur-slow: 700ms;
+  --dur-reveal: 1100ms;
+
+  --reveal-distance: 16px;
+
+  --rule: 1px solid var(--color-hairline);
+  --rule-dark: 1px solid rgb(246 243 238 / 0.16);
+
+  --focus-ring: var(--color-charcoal);
+  --focus-ring-offset: var(--color-ivory);
+
+  --header-h: 4.5rem;
+}
+
+/* Dark surfaces re-point the focus ring and rule so nested components
+   need no `isDark` prop to look correct. */
+.on-dark {
+  --focus-ring: var(--color-ivory);
+  --focus-ring-offset: var(--color-moss-900);
+  --rule: var(--rule-dark);
+}

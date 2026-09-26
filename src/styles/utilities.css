@@ -1,0 +1,101 @@
+/* ============================================================
+   UTILITIES — small composable pieces used across components.
+   Written as @utility so they merge with Tailwind's cascade and
+   accept variants (hover:, md:, etc.).
+   ============================================================ */
+
+/* Hairline rule that adapts to light/dark surfaces automatically. */
+@utility rule-t {
+  border-top: var(--rule);
+}
+@utility rule-b {
+  border-bottom: var(--rule);
+}
+@utility rule-l {
+  border-left: var(--rule);
+}
+@utility rule-r {
+  border-right: var(--rule);
+}
+
+/* Optical alignment: pulls a large display line flush with the grid edge,
+   compensating for the side bearing of the serif. */
+@utility optical-left {
+  margin-left: -0.04em;
+}
+
+/* Editorial numerals — tabular for schedules, oldstyle for prose. */
+@utility nums-tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* The standard image frame: sharp corners, warm placeholder ground while
+   loading, and a hairline that keeps light photography from bleeding into
+   the ivory page. */
+@utility img-frame {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-ivory-300);
+  box-shadow: inset 0 0 0 1px rgb(27 26 24 / 0.06);
+}
+
+/* Underline that grows from the left on hover. Tier 1 (pure CSS). */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size var(--dur-base) var(--ease-brand);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* Inverse: a persistent underline that retracts on hover. Used for links
+   inside body copy, where the underline must be visible by default for
+   accessibility but can politely step aside on interaction. */
+@utility link-underline-retract {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 100% 1px;
+  transition: background-size var(--dur-base) var(--ease-brand);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 0% 1px;
+  }
+}
+
+/* Comfortable touch target without changing visual size — expands the hit
+   area of small controls to 44px via a pseudo-element. */
+@utility tap-44 {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+  }
+}
+
+/* Visually hidden but available to screen readers. */
+@utility sr-only-focusable {
+  &:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
