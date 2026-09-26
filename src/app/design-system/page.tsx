@@ -57,7 +57,7 @@ const typeScale = [
 
 export default function DesignSystemPage() {
   return (
-    <main id="main">
+    <div>
       {/* ---------------------------------------------------------------- */}
       <Section spacing="loose">
         <Container>
@@ -512,6 +512,6 @@ export default function DesignSystemPage() {
           </Reveal>
         </Container>
       </Section>
-    </main>
+    </div>
   );
 }

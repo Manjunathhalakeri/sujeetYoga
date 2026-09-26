@@ -16,10 +16,13 @@
  */
 
 export const siteConfig = {
-  /** TODO: real studio / practice name. */
-  name: 'Studio Name',
+  /** The brand is the person. TODO: confirm the correct spelling of the name
+   *  (taken from the repository name) and whether a surname should be shown. */
+  name: 'Sujit',
+  /** Shown beside the wordmark in the header. TODO: confirm wording. */
+  wordmarkSuffix: 'Yoga',
   /** TODO: 2–5 words. Appears after the name in the browser tab. */
-  shortDescription: 'Yoga studio',
+  shortDescription: 'Yoga & wellbeing',
   /** TODO: one sentence, used as the default meta description. */
   description:
     'Placeholder description. Replace with one clear sentence describing the practice, who it is for, and where it is.',
@@ -51,6 +54,9 @@ export const siteConfig = {
   },
 
   /** Default CTA wording, so campaign copy can be changed without touching components. */
+  /** Shown in the footer. TODO: confirm or remove. */
+  footerNote: 'Placeholder. A short closing line about the practice belongs here.',
+
   cta: {
     primaryLabel: 'Enquire about classes',
     primaryHref: '/contact',

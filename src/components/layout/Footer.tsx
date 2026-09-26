@@ -1,0 +1,130 @@
+import Link from 'next/link';
+import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
+import { TextLink } from '@/components/ui/TextLink';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { Badge } from '@/components/ui/Badge';
+import { navigation, siteConfig } from '@/content/siteConfig';
+
+/**
+ * FOOTER
+ *
+ * Asymmetric like the rest of the page: an oversized wordmark occupying the
+ * left half, with three narrow columns of links pushed right. Hairlines only —
+ * no filled panel, so the page ends quietly rather than with a slab.
+ *
+ * Contact rows render only when a real value exists, so the footer does not
+ * advertise a placeholder phone number as though it were real.
+ */
+export function Footer() {
+  const { contact, social } = siteConfig;
+
+  const hasPhone = !contact.phone.endsWith('0000000000');
+  const hasEmail = !contact.email.startsWith('hello@example');
+  const socials = Object.entries(social).filter(([, href]) => Boolean(href));
+
+  return (
+    <Section as="footer" surface="ivory" spacing="default" ruled className="pb-10">
+      <Container>
+        <div className="gap-block grid lg:grid-cols-12">
+          {/* Wordmark — deliberately oversized, deliberately left. */}
+          <div className="lg:col-span-5">
+            <p className="text-display-2 font-display leading-[0.95]">
+              {siteConfig.name}
+              <span className="text-stone block">{siteConfig.wordmarkSuffix}</span>
+            </p>
+            <p className="text-small text-stone mt-6 max-w-[34ch]">
+              {siteConfig.footerNote}
+            </p>
+          </div>
+
+          <div className="lg:col-span-2 lg:col-start-7">
+            <Eyebrow className="mb-5">Explore</Eyebrow>
+            <ul className="space-y-3">
+              {navigation.map((item) => (
+                <li key={item.href}>
+                  <TextLink
+                    href={item.href}
+                    className="text-small text-stone hover:text-charcoal"
+                  >
+                    {item.label}
+                  </TextLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3">
+            <Eyebrow className="mb-5">Contact</Eyebrow>
+            <ul className="space-y-3">
+              {hasEmail ? (
+                <li>
+                  <TextLink
+                    href={`mailto:${contact.email}`}
+                    className="text-small text-stone hover:text-charcoal"
+                  >
+                    {contact.email}
+                  </TextLink>
+                </li>
+              ) : (
+                <li>
+                  <Badge tone="placeholder">TODO: email</Badge>
+                </li>
+              )}
+              {hasPhone ? (
+                <li>
+                  <TextLink
+                    href={`tel:${contact.phone}`}
+                    className="text-small text-stone hover:text-charcoal"
+                  >
+                    {contact.phone}
+                  </TextLink>
+                </li>
+              ) : (
+                <li>
+                  <Badge tone="placeholder">TODO: phone</Badge>
+                </li>
+              )}
+              <li className="text-small text-stone">
+                {contact.address ?? <Badge tone="placeholder">TODO: address</Badge>}
+              </li>
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
+            <Eyebrow className="mb-5">Follow</Eyebrow>
+            {socials.length > 0 ? (
+              <ul className="space-y-3">
+                {socials.map(([key, href]) => (
+                  <li key={key}>
+                    <TextLink
+                      href={href as string}
+                      className="text-small text-stone hover:text-charcoal capitalize"
+                    >
+                      {key}
+                    </TextLink>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Badge tone="placeholder">TODO: socials</Badge>
+            )}
+          </div>
+        </div>
+
+        <div className="rule-t text-micro mt-section flex flex-col gap-3 pt-6 text-stone-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          </p>
+          <p>
+            {siteConfig.isPlaceholder ? (
+              <span className="text-clay">
+                Placeholder content — not for publication.
+              </span>
+            ) : null}
+          </p>
+        </div>
+      </Container>
+    </Section>
+  );
+}

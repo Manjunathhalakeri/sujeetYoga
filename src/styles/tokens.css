@@ -67,6 +67,13 @@
   --text-eyebrow--letter-spacing: 0.18em;
   --text-eyebrow--font-weight: 500;
 
+  /* Homepage hero only. Larger cap than display-1 so the hero can carry the
+     page, while interior pages stay at display-1. The lower bound is the same
+     as display-1 so nothing overflows on a small phone. */
+  --text-hero: clamp(2.75rem, 7.6vw, 6.25rem); /* 44 → 100px */
+  --text-hero--line-height: 0.96;
+  --text-hero--letter-spacing: -0.025em;
+
   --text-display-1: clamp(2.75rem, 6.5vw, 5.25rem); /* 44 → 84px */
   --text-display-1--line-height: 0.98;
   --text-display-1--letter-spacing: -0.02em;

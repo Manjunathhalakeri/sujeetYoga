@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ElementType, ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
 /**
@@ -28,6 +28,9 @@ const spacings: Record<SectionSpacing, string> = {
 };
 
 export interface SectionProps {
+  /** Render as another element — e.g. `footer`. Keeps the spacing/surface
+   *  system available to landmarks that are not <section>. */
+  as?: ElementType;
   id?: string;
   surface?: SectionSurface;
   spacing?: SectionSpacing;
@@ -43,6 +46,7 @@ export interface SectionProps {
 }
 
 export function Section({
+  as: Tag = 'section',
   id,
   surface = 'ivory',
   spacing = 'default',
@@ -53,13 +57,13 @@ export function Section({
   children,
 }: SectionProps) {
   return (
-    <section
+    <Tag
       id={id}
       aria-labelledby={labelledBy}
       aria-label={label}
       className={cn(surfaces[surface], spacings[spacing], ruled && 'rule-t', className)}
     >
       {children}
-    </section>
+    </Tag>
   );
 }

@@ -115,6 +115,44 @@ export const images = {
     license: 'Unsplash License',
     isPlaceholder: true,
   },
+  /** Reviewed: black-and-white studio shot, a figure in downward dog on a mat in
+   *  an empty hall, low raking light on a wooden floor. Quiet and anatomical. */
+  studioMono: {
+    src: unsplash('1599901860904-17e6ed7083a0'),
+    alt: 'A person in downward-facing dog on a mat in an empty studio, in black and white.',
+    briefing:
+      'Replace with a real photograph from the studio. Monochrome is used deliberately here to separate the programme imagery from the warmer lifestyle photography.',
+    source: 'unsplash',
+    sourceUrl: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0',
+    license: 'Unsplash License',
+    isPlaceholder: true,
+  },
+
+  /** Reviewed: black-and-white overhead of a figure folded forward into child's
+   *  pose, arms extended, dark ground. Reads as stillness rather than exercise. */
+  stillnessMono: {
+    src: unsplash('1593810450967-f9c42742e326'),
+    alt: "A person folded forward in child's pose with arms extended, in black and white.",
+    briefing:
+      'Replace with a still, restful photograph. This sits beside the philosophy copy, so it must read as stillness, not as effort.',
+    source: 'unsplash',
+    sourceUrl: 'https://images.unsplash.com/photo-1593810450967-f9c42742e326',
+    license: 'Unsplash License',
+    isPlaceholder: true,
+  },
+
+  /** Reviewed: a low timber-and-tile building at dusk, warm lantern light,
+   *  planting and trees around a courtyard. Stands in for the studio space. */
+  space: {
+    src: unsplash('1531971589569-0d9370cbe1e5'),
+    alt: 'A low timber building at dusk, lit from within, surrounded by planting and trees.',
+    briefing:
+      'Replace with a photograph of the actual space — exterior, courtyard or practice room. Shoot at dusk or in soft morning light; hard midday sun will not match the rest of the set.',
+    source: 'unsplash',
+    sourceUrl: 'https://images.unsplash.com/photo-1531971589569-0d9370cbe1e5',
+    license: 'Unsplash License',
+    isPlaceholder: true,
+  },
 } as const satisfies Record<string, ImageAsset>;
 
 export type ImageKey = keyof typeof images;
