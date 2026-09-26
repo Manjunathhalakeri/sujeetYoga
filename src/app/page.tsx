@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   // The homepage overrides the title template so it does not read
   // "Home · Sujit" — the default from layout.tsx is already correct here.
   title: {
-    absolute: `${siteConfig.name} ${siteConfig.wordmarkSuffix} — ${siteConfig.shortDescription}`,
+    absolute: `${siteConfig.name} — ${siteConfig.shortDescription}`,
   },
   description: siteConfig.description,
   alternates: { canonical: '/' },

@@ -21,7 +21,10 @@ export function Footer() {
 
   const hasPhone = !contact.phone.endsWith('0000000000');
   const hasEmail = !contact.email.startsWith('hello@example');
-  const socials = Object.entries(social).filter(([, href]) => Boolean(href));
+  // Only platforms the client actually uses. Each carries its own label and
+  // handle so the footer can read "Instagram · @handle" rather than showing a
+  // bare handle that could be mistaken for the brand name.
+  const socials = Object.values(social).filter((p) => p !== null);
 
   return (
     <Section as="footer" surface="ivory" spacing="default" ruled className="pb-10">
@@ -30,8 +33,8 @@ export function Footer() {
           {/* Wordmark — deliberately oversized, deliberately left. */}
           <div className="lg:col-span-5">
             <p className="text-display-2 font-display leading-[0.95]">
-              {siteConfig.name}
-              <span className="text-stone block">{siteConfig.wordmarkSuffix}</span>
+              {siteConfig.wordmark.lead}
+              <span className="text-stone block">{siteConfig.wordmark.trail}</span>
             </p>
             <p className="text-small text-stone mt-6 max-w-[34ch]">
               {siteConfig.footerNote}
@@ -95,13 +98,14 @@ export function Footer() {
             <Eyebrow className="mb-5">Follow</Eyebrow>
             {socials.length > 0 ? (
               <ul className="space-y-3">
-                {socials.map(([key, href]) => (
-                  <li key={key}>
+                {socials.map((profile) => (
+                  <li key={profile.url}>
                     <TextLink
-                      href={href as string}
-                      className="text-small text-stone hover:text-charcoal capitalize"
+                      href={profile.url}
+                      className="text-small text-stone hover:text-charcoal"
                     >
-                      {key}
+                      {profile.label}
+                      <span className="text-stone-400"> · {profile.handle}</span>
                     </TextLink>
                   </li>
                 ))}

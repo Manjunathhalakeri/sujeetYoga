@@ -73,8 +73,8 @@ export function Header() {
           className="text-h4 font-display rounded-xs tracking-[-0.01em] whitespace-nowrap"
           aria-label={`${siteConfig.name} — home`}
         >
-          {siteConfig.name}
-          <span className="text-stone"> {siteConfig.wordmarkSuffix}</span>
+          {siteConfig.wordmark.lead}
+          <span className="text-stone"> {siteConfig.wordmark.trail}</span>
         </Link>
 
         {/* Desktop navigation */}
@@ -127,8 +127,8 @@ export function Header() {
           >
             <Container className="flex h-[var(--header-h)] shrink-0 items-center justify-between">
               <span className="text-h4 font-display">
-                {siteConfig.name}
-                <span className="text-stone"> {siteConfig.wordmarkSuffix}</span>
+                {siteConfig.wordmark.lead}
+                <span className="text-stone"> {siteConfig.wordmark.trail}</span>
               </span>
               <button
                 type="button"

@@ -15,16 +15,40 @@
  * ────────────────────────────────────────────────────────────────────────────
  */
 
+export interface SocialProfile {
+  /** Platform name, e.g. "Instagram". */
+  label: string;
+  /** Shown to the reader, e.g. "@sujityoga_001". */
+  handle: string;
+  url: string;
+}
+
 export const siteConfig = {
-  /** The brand is the person, not a studio.
-   *  Source: the client's public Instagram display name, "Sujit yoga 18"
-   *  (@sujityoga_001), supplied by the client as brand reference.
-   *  TODO: confirm how the name should appear in the wordmark, and whether a
-   *  full name, surname or honorific should be shown. No surname, legal name
-   *  or professional title is assumed here. */
-  name: 'Sujit',
-  /** Shown beside the wordmark in the header. TODO: confirm wording. */
-  wordmarkSuffix: 'Yoga',
+  /**
+   * THE BRAND NAME. Use this wherever the site names itself — titles, metadata,
+   * copyright, aria-labels, structured data.
+   *
+   * ⚠ The Instagram handle is NOT the brand and must never stand in for it.
+   *     Brand      → "Sujit Yoga"
+   *     Instagram  → "@sujityoga_001"
+   */
+  name: 'Sujit Yoga',
+
+  /**
+   * THE PERSON. Used only in running prose where the human is meant, e.g.
+   * "Read more about Sujit". Never used as the site's name.
+   * TODO: confirm whether a full name, surname or honorific should be shown.
+   * None is assumed here.
+   */
+  personName: 'Sujit',
+
+  /**
+   * The wordmark is set in two tones in the header and footer, so the two
+   * halves are declared explicitly rather than derived by splitting `name` —
+   * splitting on a space would break the moment the name gains a third word.
+   * lead + trail must always read as `name`.
+   */
+  wordmark: { lead: 'Sujit', trail: 'Yoga' },
   /** TODO: 2–5 words. Appears after the name in the browser tab. */
   shortDescription: 'Yoga & wellbeing',
   /** TODO: one sentence, used as the default meta description. */
@@ -50,12 +74,20 @@ export const siteConfig = {
     address: null as string | null,
   },
 
+  /**
+   * Social profiles. `handle` is shown to the reader, `url` is where it points.
+   * The handle is presented as a handle — never as the brand name.
+   * Set an entry to null for a platform the client does not use.
+   */
   social: {
-    /** Supplied by the client. This is a real, verified handle — the only
-     *  externally verifiable fact currently on the site. */
-    instagram: 'https://instagram.com/sujityoga_001' as string | null,
-    youtube: null as string | null,
-    facebook: null as string | null,
+    /** Client-supplied and externally verifiable. */
+    instagram: {
+      label: 'Instagram',
+      handle: '@sujityoga_001',
+      url: 'https://instagram.com/sujityoga_001',
+    } as SocialProfile | null,
+    youtube: null as SocialProfile | null,
+    facebook: null as SocialProfile | null,
   },
 
   /** Default CTA wording, so campaign copy can be changed without touching components. */

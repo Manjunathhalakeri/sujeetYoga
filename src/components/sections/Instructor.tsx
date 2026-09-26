@@ -102,7 +102,7 @@ export function Instructor() {
               )}
 
               <p className="mt-10">
-                <TextLink href="/about">Read more about {siteConfig.name}</TextLink>
+                <TextLink href="/about">Read more about {siteConfig.personName}</TextLink>
               </p>
             </Reveal>
           </div>

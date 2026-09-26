@@ -95,7 +95,8 @@ export function Feed() {
         </ul>
       </Reveal>
       <p className="sr-only">
-        A row of photographs from {siteConfig.name}&rsquo;s practice. Placeholder images.
+        A row of photographs from {siteConfig.personName}&rsquo;s practice. Placeholder
+        images.
       </p>
     </Section>
   );
