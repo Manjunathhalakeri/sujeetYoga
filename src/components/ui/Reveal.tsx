@@ -1,7 +1,16 @@
 'use client';
 
 import { useRef, type ElementType, type ReactNode } from 'react';
-import { DISTANCE, DURATION, EASE, REVEAL_START, gsap, useGSAP } from '@/lib/motion';
+import {
+  DISTANCE,
+  DURATION,
+  EASE,
+  MOTION_QUERIES,
+  REVEAL_START,
+  gsap,
+  useGSAP,
+  type MotionConditions,
+} from '@/lib/motion';
 import { cn } from '@/lib/cn';
 
 /**
@@ -51,28 +60,22 @@ export function Reveal({
 
       const mm = gsap.matchMedia();
 
-      mm.add(
-        {
-          motion: '(prefers-reduced-motion: no-preference)',
-          reduced: '(prefers-reduced-motion: reduce)',
-        },
-        (ctx) => {
-          const { reduced } = ctx.conditions as { reduced: boolean };
+      mm.add(MOTION_QUERIES, (ctx) => {
+        const { reduced } = ctx.conditions as unknown as MotionConditions;
 
-          gsap.fromTo(
-            el,
-            { autoAlpha: 0, y: reduced ? 0 : distance },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: reduced ? DURATION.quick : DURATION.base,
-              ease: EASE,
-              delay: reduced ? 0 : delay,
-              scrollTrigger: { trigger: el, start: REVEAL_START, once: true },
-            },
-          );
-        },
-      );
+        gsap.fromTo(
+          el,
+          { autoAlpha: 0, y: reduced ? 0 : distance },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: reduced ? DURATION.quick : DURATION.base,
+            ease: EASE,
+            delay: reduced ? 0 : delay,
+            scrollTrigger: { trigger: el, start: REVEAL_START, once: true },
+          },
+        );
+      });
 
       return () => mm.revert();
     },
@@ -97,11 +100,21 @@ export function Reveal({
 export function RevealGroup({
   as: Tag = 'div',
   stagger = 0.08,
+  scrub = false,
   className,
   children,
 }: {
   as?: ElementType;
   stagger?: number;
+  /**
+   * Tie the stagger to scroll position instead of playing it once on entry.
+   *
+   * DESKTOP ONLY, and silently ignored elsewhere: scrubbing a long list on a
+   * phone means the rows are only readable at the scroll position that happens
+   * to resolve them, which is worse than simply showing them. Mobile and
+   * reduced-motion both fall back to the one-shot stagger.
+   */
+  scrub?: boolean;
   className?: string;
   children: ReactNode;
 }) {
@@ -116,28 +129,52 @@ export function RevealGroup({
 
       const mm = gsap.matchMedia();
 
-      mm.add(
-        {
-          motion: '(prefers-reduced-motion: no-preference)',
-          reduced: '(prefers-reduced-motion: reduce)',
-        },
-        (ctx) => {
-          const { reduced } = ctx.conditions as { reduced: boolean };
+      mm.add(MOTION_QUERIES, (ctx) => {
+        const { reduced, desktop } = ctx.conditions as unknown as MotionConditions;
+        const useScrub = scrub && desktop && !reduced;
 
-          gsap.fromTo(
-            items,
-            { autoAlpha: 0, y: reduced ? 0 : DISTANCE },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: reduced ? DURATION.quick : DURATION.base,
-              ease: EASE,
-              stagger: reduced ? 0 : stagger,
-              scrollTrigger: { trigger: el, start: REVEAL_START, once: true },
-            },
-          );
-        },
-      );
+        gsap.fromTo(
+          items,
+          useScrub
+            ? // A scrubbed row is only as visible as the scroll position makes
+              // it, so it must never start fully hidden: if a trigger is even
+              // slightly mispositioned — stale after a font swap, say — a row
+              // at 0 is simply missing content. Starting at 0.25 means the
+              // worst case is "dim", not "gone". Same reasoning as ScrubSweep.
+              { autoAlpha: 0.25, y: DISTANCE }
+            : { autoAlpha: 0, y: reduced ? 0 : DISTANCE },
+          useScrub
+            ? {
+                autoAlpha: 1,
+                y: 0,
+                // ease 'none' is mandatory on a scrub: any other curve breaks
+                // the 1:1 mapping between scroll position and progress.
+                ease: 'none',
+                stagger: stagger * 4,
+                scrollTrigger: {
+                  trigger: el,
+                  // Resolves across the list's own height, so a row lands as it
+                  // reaches a comfortable reading position rather than all at
+                  // once when the list first appears.
+                  start: 'top 82%',
+                  end: 'bottom 70%',
+                  scrub: 0.7,
+                  // Recompute start/end on every refresh. Without it the values
+                  // are cached from creation time, and this list sits below a
+                  // pinned hero whose spacer changes every position beneath it.
+                  invalidateOnRefresh: true,
+                },
+              }
+            : {
+                autoAlpha: 1,
+                y: 0,
+                duration: reduced ? DURATION.quick : DURATION.base,
+                ease: EASE,
+                stagger: reduced ? 0 : stagger,
+                scrollTrigger: { trigger: el, start: REVEAL_START, once: true },
+              },
+        );
+      });
 
       return () => mm.revert();
     },

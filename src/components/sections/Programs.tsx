@@ -51,7 +51,15 @@ export function Programs() {
           </div>
 
           <div className="lg:col-span-7 lg:col-start-6">
-            <RevealGroup as="ul" className="rule-t" stagger={0.06}>
+            {/* The heading above is held by CSS `position: sticky`, not a GSAP
+                pin. Sticky already does exactly this — holds the heading while
+                the list scrolls past — for free and with no JavaScript, so
+                swapping it for a pin would be a heavier way to get the same
+                result. What GSAP adds here is the list itself: rows resolve
+                against scroll position rather than firing once when the list
+                appears, so reading down the list drives the reveal. Desktop
+                only; see RevealGroup. */}
+            <RevealGroup as="ul" className="rule-t" stagger={0.06} scrub>
               {programs.map((program) => (
                 <RevealItem as="li" key={program.slug} className="rule-b">
                   <Link
