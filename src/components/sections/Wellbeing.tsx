@@ -24,7 +24,7 @@ export function Wellbeing() {
     <>
       {/* Full-bleed band. Fixed viewport-relative height so it reads as a
           horizon line between two sections rather than as a hero. */}
-      <div className="bg-ink-raised relative h-[38vh] min-h-56 w-full overflow-hidden md:h-[52vh]">
+      <div className="img-duotone vignette bg-ink-raised relative h-[38vh] min-h-56 w-full overflow-hidden md:h-[52vh]">
         <Image
           src={images.landscape.src}
           alt={images.landscape.alt}

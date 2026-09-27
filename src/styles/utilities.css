@@ -102,3 +102,77 @@
     white-space: nowrap;
   }
 }
+
+/* ============================================================
+   TEXTURE (P2)
+   Every effect here is chosen for cost as much as for looks. The site is
+   aimed at mid-range Android over patchy mobile data, so: no runtime SVG
+   filters, no full-screen blend modes, no image requests.
+   ============================================================ */
+
+/* ---------- film grain ----------
+   A 160px fractalNoise tile, inlined as a data URI. The browser rasterises the
+   SVG once and repeats it, so this costs ZERO network requests and no runtime
+   filtering — unlike `filter: url(#noise)`, which would re-run the turbulence
+   on every paint.
+
+   Deliberately NOT using mix-blend-mode. A blend mode on a full-screen fixed
+   layer forces the whole page into one compositing group, which is exactly the
+   thing that makes grain overlays janky on mobile. Plain low-opacity grey
+   noise over a dark ground reads as grain without that cost. */
+@utility grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  /* Promote once to its own layer so it is never repainted while scrolling.
+     This is the one place will-change-style promotion genuinely pays for
+     itself: a single static layer, created once, for the life of the page. */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ---------- vignette ----------
+   For full-bleed imagery only. A radial gradient on a pseudo-element, so it
+   composites with the image rather than filtering it. */
+@utility vignette {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      125% 85% at 50% 42%,
+      transparent 38%,
+      rgb(14 13 11 / 0.5) 100%
+    );
+  }
+}
+
+/* ---------- warm duotone ----------
+   Filter functions only — no overlay element, no blend mode, no SVG filter.
+   A true two-colour duotone needs feComponentTransfer, but the sepia route
+   gets within a hair of it for a fraction of the cost, and these filters are
+   GPU-accelerated.
+
+   This is what makes the client's real photography usable: four phone snaps
+   shot in hard midday light read as amateur in colour, and as intentional once
+   graded into the palette's warm monochrome. It also stops the mixed sources
+   (stock + phone) reading as two different sites. */
+@utility img-duotone {
+  & img {
+    filter: grayscale(1) sepia(0.42) saturate(1.5) hue-rotate(-14deg) brightness(0.84)
+      contrast(1.1);
+  }
+}
+
+/* ---------- surface tone shift ----------
+   Raised surfaces get a barely-there wash from the top so they are not flat
+   fills. At 1.2% it is below conscious notice but stops large areas reading as
+   dead colour. */
+@utility tone-shift {
+  background-image: linear-gradient(180deg, rgb(237 231 221 / 0.014), transparent 45%);
+}

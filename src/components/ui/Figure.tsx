@@ -56,6 +56,12 @@ export interface FigureProps {
   wrapperClassName?: string;
   /** Slight warm wash, for photography that needs tying to the palette. */
   warm?: boolean;
+  /**
+   * Warm duotone grade. ON by default — it is what unifies stock placeholders
+   * with the client's phone photography and ties both to the palette. Set
+   * false only where true colour genuinely matters.
+   */
+  duotone?: boolean;
 }
 
 export function Figure({
@@ -69,10 +75,13 @@ export function Figure({
   className,
   wrapperClassName,
   warm = false,
+  duotone = true,
 }: FigureProps) {
   return (
     <figure className={cn('m-0', wrapperClassName)}>
-      <div className={cn('img-frame', ratios[ratio], className)}>
+      <div
+        className={cn('img-frame', duotone && 'img-duotone', ratios[ratio], className)}
+      >
         <Image
           src={src}
           alt={alt}

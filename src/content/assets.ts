@@ -66,15 +66,31 @@ export const images = {
 
   /** Reviewed: backlit seated meditation on a wooden deck, palm fronds and
    *  low sun behind. Warm, tropical, reads as an Indian/South Asian setting. */
+  /**
+   * THE FIRST REAL PHOTOGRAPH ON THE SITE. Client-supplied.
+   *
+   * Prepared from public/images/source/natarajasana-mandapa.jpeg: the bottom
+   * 10% was cropped to remove a 'REDMI 10 PRIME / TEAM CYSS' camera watermark,
+   * 4% trimmed from the top where there was only empty sky, then resized to
+   * 1200px wide.
+   *
+   * It carries the warm duotone like every other image, which is what lets a
+   * phone photograph sit beside stock placeholders without the two reading as
+   * different sites.
+   *
+   * The alt text describes the frame rather than naming the subject: the photo
+   * was supplied by the client as his own, but nothing in the image itself
+   * establishes who it shows. TODO: confirm, then name him in the alt text.
+   */
   portrait: {
-    src: unsplash('1506126613408-eca07ce68773'),
-    alt: 'A person seated cross-legged in meditation on a wooden deck at sunrise, framed by palm leaves.',
+    src: '/images/sujit-natarajasana.jpg',
+    alt: 'A man holding Natarajasana, standing on one leg with the other foot drawn up behind him, in front of a small stone mandapa at dusk.',
     briefing:
-      'Replace with a portrait-orientation photograph of the instructor, natural light, calm setting. Used in the About and Instructor sections at a 4:5 crop.',
-    source: 'unsplash',
-    sourceUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773',
-    license: 'Unsplash License',
-    isPlaceholder: true,
+      'Client-supplied and in use. Replace only with a better portrait-orientation photograph — natural light, calm setting. Used in the About and Instructor sections at a 4:5 crop.',
+    source: 'owned',
+    sourceUrl: 'public/images/source/natarajasana-mandapa.jpeg',
+    license: 'Client-supplied — confirm usage rights before launch',
+    isPlaceholder: false,
   },
 
   /** Reviewed: woman in extended side angle pose on a forest path, dappled

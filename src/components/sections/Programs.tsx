@@ -95,7 +95,7 @@ export function Programs() {
                         it is decorative, and the row is already fully labelled. */}
                     <span
                       aria-hidden="true"
-                      className="img-frame pointer-events-none absolute top-1/2 right-0 hidden h-28 w-40 -translate-y-1/2 opacity-0 transition-opacity duration-[var(--dur-base)] group-hover:opacity-100 xl:block"
+                      className="img-frame img-duotone pointer-events-none absolute top-1/2 right-0 hidden h-28 w-40 -translate-y-1/2 opacity-0 transition-opacity duration-[var(--dur-base)] group-hover:opacity-100 xl:block"
                     >
                       <Image
                         src={images[program.image].src}

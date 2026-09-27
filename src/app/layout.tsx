@@ -77,6 +77,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        {/* Film grain. One fixed, promoted layer for the whole document — see
+            the `grain` utility for why this is a tiled data URI rather than a
+            runtime SVG filter. Purely decorative, so hidden from assistive
+            tech and inert to pointer events. */}
+        <div className="grain" aria-hidden="true" />
       </body>
     </html>
   );

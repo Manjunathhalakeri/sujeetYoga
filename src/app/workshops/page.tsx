@@ -53,7 +53,7 @@ function WorkshopEntry({ workshop }: { workshop: Workshop }) {
     <article className="gap-block grid py-10 lg:grid-cols-12 lg:gap-x-10 lg:py-14">
       <div className="lg:col-span-4">
         <ImageReveal>
-          <div className="img-frame relative aspect-[4/5]">
+          <div className="img-frame img-duotone relative aspect-[4/5]">
             <Image
               src={images[workshop.image].src}
               alt={images[workshop.image].alt}

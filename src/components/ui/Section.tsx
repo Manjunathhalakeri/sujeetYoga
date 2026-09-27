@@ -20,10 +20,10 @@ const surfaces: Record<SectionSurface, string> = {
   /** Default page ground. */
   ink: 'bg-ink text-bone',
   /** Alternating band — the workhorse for breaking up a long page. */
-  raised: 'bg-ink-raised text-bone',
+  raised: 'bg-ink-raised tone-shift text-bone',
   /** Reading-heavy sections: long prose on About and programme detail pages.
    *  The lightest ground, which lifts body copy off the page slightly. */
-  lifted: 'bg-ink-lifted text-bone',
+  lifted: 'bg-ink-lifted tone-shift text-bone',
   /** Deepest ground — full-bleed bands and the footer. */
   deep: 'bg-ink-deep text-bone',
   none: '',

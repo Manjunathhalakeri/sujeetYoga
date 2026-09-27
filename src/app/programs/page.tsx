@@ -60,7 +60,7 @@ export default function ProgramsIndexPage() {
                         : 'lg:order-2 lg:col-span-5 lg:col-start-8'
                     }
                   >
-                    <div className="img-frame relative aspect-[3/2]">
+                    <div className="img-frame img-duotone relative aspect-[3/2]">
                       <Image
                         src={images[program.image].src}
                         alt={images[program.image].alt}

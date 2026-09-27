@@ -79,7 +79,7 @@ export function Feed() {
           {feedImages.map((key, i) => (
             <li
               key={`${key}-${i}`}
-              className="img-frame relative aspect-[4/5] w-[68vw] shrink-0 snap-start sm:w-[38vw] lg:w-[22vw] xl:w-[18vw]"
+              className="img-frame img-duotone relative aspect-[4/5] w-[68vw] shrink-0 snap-start sm:w-[38vw] lg:w-[22vw] xl:w-[18vw]"
             >
               <Image
                 src={images[key].src}

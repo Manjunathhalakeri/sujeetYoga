@@ -109,6 +109,7 @@ export default async function ProgramDetailPage({
                 alt={images[program.image].alt}
                 ratio="wide"
                 sizes="100vw"
+                className="vignette"
                 credit="Placeholder photography"
               />
             </ImageReveal>
