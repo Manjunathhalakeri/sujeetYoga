@@ -11,7 +11,20 @@
 
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
+    /* ⚠ DO NOT re-add `scroll-behavior: smooth` here.
+       It broke every internal navigation on the site. Next's router calls
+       scrollIntoView on the incoming route during the transition; with native
+       smooth scrolling that scroll resolves asynchronously, after the
+       transition has finished, and settles at the wrong offset. Measured in
+       Chromium: every header nav link landed 366-556px down the new page with
+       its <h1> scrolled off the top. Removing this fixed all five (y = 0).
+
+       It also conflicts with ScrollTrigger, which reads and writes scroll
+       position directly — GSAP advises against native smooth scrolling
+       alongside pinning for exactly that reason, and this site pins the hero.
+
+       Nothing is lost: the only in-page anchor is the skip link, and a skip
+       link should land instantly rather than animate. */
     scroll-padding-top: calc(var(--header-h) + 1.5rem);
   }
 
@@ -119,10 +132,9 @@
      A blanket safety net. Components additionally branch in JS via
      Motion's useReducedMotion so they skip transforms entirely. */
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
+    /* No `html { scroll-behavior: auto }` here — there is no smooth scrolling
+       left to undo. The blanket rule below stays as a safety net in case a
+       component ever sets it on a scroll container of its own. */
     *,
     *::before,
     *::after {

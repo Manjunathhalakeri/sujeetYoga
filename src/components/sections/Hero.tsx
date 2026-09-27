@@ -241,7 +241,14 @@ export function Hero() {
             data-reveal=""
             className="img-frame img-duotone vignette relative aspect-[4/5] w-full sm:aspect-[3/2] lg:absolute lg:top-[var(--header-h)] lg:right-0 lg:bottom-0 lg:aspect-auto lg:h-auto lg:w-[48vw]"
           >
-            <div data-hero-media-inner="" className="h-full w-full">
+            {/* `relative` is load-bearing, not decoration: the <Image> inside
+                uses `fill`, so it needs a positioned ancestor. Without it the
+                image resolves against the frame one level up — which looks
+                identical here only because the two boxes coincide, and which
+                Next flags as a warning. It would otherwise depend on GSAP's
+                transform to establish the containing block, so the layout
+                would be correct only once the animation had run. */}
+            <div data-hero-media-inner="" className="relative h-full w-full">
               <Image
                 src={images.hero.src}
                 alt={images.hero.alt}
