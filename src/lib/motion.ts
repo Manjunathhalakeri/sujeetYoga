@@ -70,4 +70,19 @@ export const revealVars = {
   ease: EASE,
 } as const;
 
+/**
+ * Recalculate trigger positions once webfonts have actually landed.
+ *
+ * next/font uses `display: swap`, so the first paint measures against the
+ * fallback face. Any ScrollTrigger created before the real face arrives is
+ * anchored to the wrong pixel positions — most visibly on long display
+ * headings, where the metric difference is tens of pixels.
+ *
+ * Viewport resize is refreshed automatically by ScrollTrigger; font loading is
+ * not, so this is the one refresh worth wiring by hand.
+ */
+if (typeof document !== 'undefined' && 'fonts' in document) {
+  document.fonts.ready.then(() => ScrollTrigger.refresh());
+}
+
 export { gsap, ScrollTrigger, useGSAP };

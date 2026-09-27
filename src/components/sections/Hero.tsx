@@ -121,9 +121,11 @@ export function Hero() {
                 end: '+=70%',
                 pin: true,
                 scrub: 0.6,
-                // This is the first ScrollTrigger on the page; keep refresh
-                // order top-to-bottom so pin spacing is calculated correctly.
-                refreshPriority: 1,
+                // Lower refreshes FIRST. The hero is the first section on the
+                // page and its pin spacer changes the position of everything
+                // below it, so it must be recalculated before they are.
+                // Everything else leaves this at the default 0.
+                refreshPriority: -1,
               },
             })
             // Animate children of the pinned element, never the pinned element.

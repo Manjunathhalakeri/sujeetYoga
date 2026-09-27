@@ -3,6 +3,7 @@ import { Section } from '@/components/ui/Section';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Mark } from '@/components/ui/Rule';
 import { LotusDivider } from '@/components/art/LotusDivider';
+import { ScrubSweep } from '@/components/art/ScrubSweep';
 import { Reveal } from '@/components/ui/Reveal';
 import { ImageReveal } from '@/components/ui/ImageReveal';
 import { Figure } from '@/components/ui/Figure';
@@ -36,14 +37,18 @@ export function Philosophy() {
           </div>
 
           <div className="lg:col-span-9">
-            <Reveal delay={0.05}>
+            {/* The statement sweeps word by word as you scroll past it, instead
+                of the usual fade-and-rise. Reading a sentence is already a
+                left-to-right sweep; this amplifies what the reader is doing
+                rather than adding a separate motion on top of it. */}
+            <ScrubSweep>
               <h2
                 id="philosophy-heading"
                 className="text-display-2 font-display max-w-[19ch] text-balance"
               >
                 {philosophy.statement}
               </h2>
-            </Reveal>
+            </ScrubSweep>
           </div>
         </div>
 
