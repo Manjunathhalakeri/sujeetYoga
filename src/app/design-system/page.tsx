@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
@@ -18,6 +19,19 @@ export const metadata: Metadata = {
   title: 'Design system',
   robots: { index: false, follow: false },
 };
+
+/**
+ * DEVELOPMENT ONLY.
+ *
+ * This is an internal reference page, not part of the site. `notFound()` runs
+ * during the production prerender, so the route is emitted as a 404 rather than
+ * as a page — it cannot be reached on a deployed build, and there is nothing to
+ * leak if someone guesses the URL. In `next dev` it renders normally.
+ *
+ * `robots: noindex` above is belt-and-braces for any environment where the
+ * guard is deliberately lifted.
+ */
+const IS_PRODUCTION_BUILD = process.env.NODE_ENV === 'production';
 
 /* A local helper for this reference page only — not part of the design system. */
 function Spec({ label, children }: { label: string; children: React.ReactNode }) {
@@ -56,6 +70,8 @@ const typeScale = [
 ];
 
 export default function DesignSystemPage() {
+  if (IS_PRODUCTION_BUILD) notFound();
+
   return (
     <div>
       {/* ---------------------------------------------------------------- */}
