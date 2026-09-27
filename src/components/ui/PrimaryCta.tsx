@@ -1,6 +1,7 @@
 import { ArrowRight, MessageCircle } from 'lucide-react';
 import { Button, type ButtonSize } from '@/components/ui/Button';
 import { primaryAction } from '@/lib/contact';
+import { cn } from '@/lib/cn';
 
 /**
  * THE PRIMARY CALL TO ACTION, as a component.
@@ -31,6 +32,15 @@ export function PrimaryCta({
   block = false,
   /** Use the short label. For the header, where horizontal space is tight. */
   short = false,
+  /**
+   * Add the slow breathing ring — see `cta-breathe` in utilities.css.
+   *
+   * Opt-in, and deliberately not the default: it belongs on the ONE button
+   * that is the page's main invitation, which in practice means the hero. A
+   * page where every primary button breathes is a page where none of them
+   * reads as more important than the others.
+   */
+  pulse = false,
   className,
   /** Side effect on tap — the mobile menu uses it to close itself. */
   onClick,
@@ -38,6 +48,7 @@ export function PrimaryCta({
   size?: ButtonSize;
   block?: boolean;
   short?: boolean;
+  pulse?: boolean;
   className?: string;
   onClick?: () => void;
 }) {
@@ -49,7 +60,7 @@ export function PrimaryCta({
       href={action.href}
       size={size}
       block={block}
-      className={className}
+      className={cn(pulse && 'cta-breathe', className)}
       onClick={onClick}
       {...(action.isWhatsapp ? { target: '_blank' } : {})}
       icon={

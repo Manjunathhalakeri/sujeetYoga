@@ -208,7 +208,8 @@ export function Hero() {
             <p className="text-lead text-bone-dim mt-8 max-w-[38ch]">{hero.lead}</p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <PrimaryCta size="lg" />
+              {/* The one breathing button on the site — see cta-breathe. */}
+              <PrimaryCta size="lg" pulse />
               <Button href={hero.secondaryCta.href} variant="quiet">
                 {hero.secondaryCta.label}
               </Button>

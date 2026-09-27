@@ -177,3 +177,82 @@
 @utility tone-shift {
   background-image: linear-gradient(180deg, rgb(237 231 221 / 0.014), transparent 45%);
 }
+
+/* ---------- the primary CTA's breath ----------
+   A slow, low-amplitude ring that expands and settles back on the site's one
+   primary action. Added at explicit request.
+
+   ⚠ This is ambient motion, which lib/motion.ts otherwise forbids outright
+   ("never idle, never ambient, never decorative"). It is the second documented
+   exception, after the hero mandala. Worth knowing why the exception is
+   survivable here:
+
+   - It is a BREATH, not a ping. The ring expands and comes back to where it
+     started, then rests for a third of the cycle. A one-way expand-and-fade
+     reads as a notification badge demanding to be dismissed; this reads as
+     something alive. 6.5s a cycle is roughly a calm human breath rate, which
+     is the one piece of symbolism a yoga site has earned.
+   - Peak opacity is 0.3 on a 1px hairline. It is at the edge of perception in
+     peripheral vision and invisible once you are looking directly at it, which
+     is the correct way round: it should attract a glance, not hold one.
+   - It scales a ring, not the button. Scaling the button would resample its
+     text every frame, and the brief rules out scale, glow and shadow bloom on
+     buttons as SaaS tells. This adds no fill, no blur and no shadow.
+   - It pauses on hover, focus and press, so it never competes with the
+     button's own state feedback — the moment the visitor engages, it stops.
+   - It is CSS, not GSAP: no client component, no hydration cost, and the
+     blanket prefers-reduced-motion rule in base.css already neutralises it.
+     The explicit guard below states that intent rather than relying on it.
+
+   Applied to ONE button per page, via <PrimaryCta pulse />. Putting it on all
+   eight primary CTAs would be exactly the "too many animations" the brief
+   rules out — eight breathing buttons is a fairground, not a calm page. */
+@utility cta-breathe {
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid var(--color-bone);
+    opacity: 0;
+    pointer-events: none;
+    /* The symmetric curve — tokens.css reserves it for moves that come back,
+       which is precisely what a breath is. */
+    animation: cta-breathe 6500ms var(--ease-brand-in-out) infinite;
+  }
+
+  /* The visitor is engaging; stop asking for their attention. */
+  &:hover::after,
+  &:focus-visible::after,
+  &:active::after {
+    animation-play-state: paused;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes cta-breathe {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  35% {
+    opacity: 0.3;
+    transform: scale(1.05);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  /* The rest between breaths. Without it this is a throb. */
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
