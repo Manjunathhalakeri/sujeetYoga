@@ -102,6 +102,46 @@ export function Hero() {
               { scale: 1, duration: DURATION.reveal },
               0.1,
             );
+
+          /* ---------------- scroll choreography (P4) ----------------
+             The hero pins for 70% of a viewport. Short on purpose: a hero that
+             holds for a full screen reads as a broken scroll on the very first
+             gesture, which is the worst possible first impression.
+
+             While pinned, the photograph drifts up and the type drifts down and
+             fades — they separate, which is what sells depth. ease 'none' on a
+             scrub is mandatory; any other curve breaks the 1:1 mapping between
+             scroll position and progress. */
+          gsap
+            .timeline({
+              defaults: { ease: 'none' },
+              scrollTrigger: {
+                trigger: root.current,
+                start: 'top top',
+                end: '+=70%',
+                pin: true,
+                scrub: 0.6,
+                // This is the first ScrollTrigger on the page; keep refresh
+                // order top-to-bottom so pin spacing is calculated correctly.
+                refreshPriority: 1,
+              },
+            })
+            // Animate children of the pinned element, never the pinned element.
+            .to('[data-hero-media-inner]', { yPercent: -12, scale: 1.06 }, 0)
+            .to('[data-hero-type]', { y: 40, autoAlpha: 0.15 }, 0);
+
+          /* Mandala: one very slow revolution, 4 minutes per turn.
+             Ambient motion, which the system otherwise forbids — included at
+             explicit request. `ease: 'none'` so it never appears to speed up or
+             slow down, which is what would make it noticeable. It lives only in
+             the no-preference branch, so reduced motion gets a static mandala. */
+          gsap.to('[data-hero-mandala]', {
+            rotation: 360,
+            duration: 240,
+            repeat: -1,
+            ease: 'none',
+            transformOrigin: '50% 50%',
+          });
         },
       );
 
@@ -122,6 +162,7 @@ export function Hero() {
           hero is the one place where nothing may compete with the headline. */}
       <div
         aria-hidden="true"
+        data-hero-mandala=""
         className="pointer-events-none absolute -top-[18%] -left-[26%] z-0 h-[clamp(26rem,62vw,52rem)] w-[clamp(26rem,62vw,52rem)] opacity-[0.045] sm:-left-[14%] lg:-top-[24%] lg:left-[-10%]"
       >
         <Mandala />
@@ -129,7 +170,7 @@ export function Hero() {
 
       <Container className="relative z-10 lg:grid lg:min-h-[86vh] lg:grid-cols-12 lg:items-center lg:gap-x-10">
         {/* ---------------- Type ---------------- */}
-        <div className="lg:pb-section relative z-10 lg:col-span-6">
+        <div data-hero-type="" className="lg:pb-section relative z-10 lg:col-span-6">
           <div data-hero-eyebrow="" data-reveal="">
             <Eyebrow className="text-clay">{hero.eyebrow}</Eyebrow>
           </div>
