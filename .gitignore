@@ -14,3 +14,11 @@ tsconfig.tsbuildinfo
 
 # Playwright MCP scratch output (screenshots, snapshots, console logs)
 .playwright-mcp/
+
+# Claude Code: skills are tracked (.claude/skills), local overrides are not
+.claude/settings.local.json
+
+# Duplicate skill tree written by the skills CLI installer; Claude Code reads
+# .claude/skills, not this. Ignored so a future install cannot recreate it.
+.agents/
+skills-lock.json
