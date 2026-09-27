@@ -57,6 +57,14 @@ export const home = {
     ],
   },
 
+  /** The chakra strip section. Framing only — no therapeutic claim is made. */
+  chakras: {
+    eyebrow: 'The subtle body',
+    heading: 'Seven centres, root to crown.',
+    lead: 'Placeholder. One or two sentences on how the traditional map of the subtle body informs the practice — described as a lens, not as medicine.',
+    note: 'Petal counts are the traditional ones. Colour follows the familiar modern mapping, drawn here in the palette rather than at full saturation.',
+  },
+
   instructor: {
     eyebrow: 'Meet Sujit',
     heading: 'The practice is personal, so the teaching is too.',

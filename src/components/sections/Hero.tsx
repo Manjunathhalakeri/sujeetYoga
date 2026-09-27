@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { DURATION, EASE } from '@/lib/motion';
+import { Mandala } from '@/components/art/Mandala';
 import { images } from '@/content/assets';
 import { home } from '@/content/home';
 
@@ -54,7 +55,18 @@ export function Hero() {
       aria-labelledby="hero-heading"
       className="pb-section relative overflow-hidden pt-[calc(var(--header-h)+2rem)] lg:pt-[calc(var(--header-h)+4rem)] lg:pb-0"
     >
-      <Container className="lg:grid lg:min-h-[86vh] lg:grid-cols-12 lg:items-center lg:gap-x-10">
+      {/* Mandala, behind everything. Anchored to the left of the type block and
+          allowed to bleed off the top and left edges, so it reads as a partial
+          impression rather than a badge centred on the page. Kept at 4.5%: the
+          hero is the one place where nothing may compete with the headline. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-[18%] -left-[26%] z-0 h-[clamp(26rem,62vw,52rem)] w-[clamp(26rem,62vw,52rem)] opacity-[0.045] sm:-left-[14%] lg:-top-[24%] lg:left-[-10%]"
+      >
+        <Mandala />
+      </div>
+
+      <Container className="relative z-10 lg:grid lg:min-h-[86vh] lg:grid-cols-12 lg:items-center lg:gap-x-10">
         {/* ---------------- Type ---------------- */}
         <div className="lg:pb-section relative z-10 lg:col-span-6">
           <motion.div

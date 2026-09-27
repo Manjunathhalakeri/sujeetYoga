@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
+import { Fragment } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { Mark } from '@/components/ui/Rule';
+import { LotusDivider } from '@/components/art/LotusDivider';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
@@ -180,41 +184,51 @@ export default async function ProgramDetailPage({
       </Section>
 
       {/* ---------------- What to expect ------------------------------------- */}
+      {/* Horizontal steps, not the left-channel + ruled-list device used on
+          Programmes, About/Approach and Schedule. `expect` is always a short
+          ordered sequence, so laying it left-to-right with lotus dividers
+          between the stages says "this is what happens in order" far more
+          directly than a stacked list, and it breaks a pattern that had begun
+          to read as a template. Collapses to a stack below md. */}
       <Section surface="raised" spacing="loose" labelledBy="expect-heading">
         <Container>
-          <div className="gap-block grid lg:grid-cols-12 lg:gap-x-10">
-            <div className="lg:col-span-4">
-              <Reveal>
-                <SectionHeading
-                  id="expect-heading"
-                  eyebrow="What to expect"
-                  size="display-2"
-                  mark
-                >
-                  A session, start to finish.
-                </SectionHeading>
-              </Reveal>
+          <Reveal>
+            <div className="max-w-measure mx-auto text-center">
+              <Mark className="mx-auto mb-5" />
+              <Eyebrow className="mb-4">What to expect</Eyebrow>
+              <h2
+                id="expect-heading"
+                className="text-display-2 font-display text-balance"
+              >
+                A session, start to finish.
+              </h2>
             </div>
-            <div className="lg:col-span-7 lg:col-start-6">
-              <RevealGroup as="ul" className="rule-t" stagger={0.07}>
-                {program.expect.map((item, i) => (
-                  <RevealItem as="li" key={item.title} className="rule-b py-7">
-                    <div className="flex items-start gap-5 sm:gap-8">
-                      <span className="text-eyebrow nums-tabular text-bone-faint mt-1.5 shrink-0">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <div className="min-w-0">
-                        <h3 className="text-h3 font-display">{item.title}</h3>
-                        <p className="text-small text-bone-dim mt-2 max-w-[48ch]">
-                          {item.body}
-                        </p>
-                      </div>
-                    </div>
-                  </RevealItem>
-                ))}
-              </RevealGroup>
-            </div>
-          </div>
+          </Reveal>
+
+          <RevealGroup
+            as="ol"
+            className="mt-section grid gap-y-10 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-start md:gap-y-0"
+            stagger={0.09}
+          >
+            {program.expect.map((item, i) => (
+              <Fragment key={item.title}>
+                {i > 0 ? (
+                  <li aria-hidden="true" className="hidden self-center px-4 md:block">
+                    <LotusDivider className="w-16" petals={6} />
+                  </li>
+                ) : null}
+                <RevealItem as="li" className="text-center md:px-4">
+                  <span className="text-eyebrow nums-tabular text-bone-faint block">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-h3 font-display mt-3">{item.title}</h3>
+                  <p className="text-small text-bone-dim mx-auto mt-3 max-w-[32ch]">
+                    {item.body}
+                  </p>
+                </RevealItem>
+              </Fragment>
+            ))}
+          </RevealGroup>
         </Container>
       </Section>
 

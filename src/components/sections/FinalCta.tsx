@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
-import { Mark } from '@/components/ui/Rule';
+import { Om } from '@/components/art/Om';
 import { Reveal } from '@/components/ui/Reveal';
 import { home } from '@/content/home';
 
@@ -26,7 +26,7 @@ export function FinalCta() {
         <div className="grid lg:grid-cols-12 lg:gap-x-10">
           <div className="lg:col-span-8">
             <Reveal>
-              <Mark className="mb-6" />
+              <Om size={54} className="mb-7" />
               <h2
                 id="cta-heading"
                 className="text-display-1 font-display optical-left max-w-[16ch] text-balance"

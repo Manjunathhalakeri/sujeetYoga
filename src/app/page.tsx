@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Hero } from '@/components/sections/Hero';
 import { Philosophy } from '@/components/sections/Philosophy';
+import { Chakras } from '@/components/sections/Chakras';
 import { Instructor } from '@/components/sections/Instructor';
 import { Programs } from '@/components/sections/Programs';
 import { Wellbeing } from '@/components/sections/Wellbeing';
@@ -30,7 +31,8 @@ export const metadata: Metadata = {
  * template. Section by section, where the weight sits:
  *
  *   Hero        type left  · photograph bleeding right   · ivory
- *   Philosophy  statement indented right, empty left channel · ivory
+ *   Philosophy  statement indented right, empty left channel · ink
+ *   Chakras     CENTRED — the flat rest between two offset sections · raised
  *   Instructor  portrait LEFT and dropped · text right   · ivory-300
  *   Programmes  sticky heading left · ruled list right    · ivory
  *   Wellbeing   full-bleed band, then heading left · pillars right · moss
@@ -46,6 +48,7 @@ export default function HomePage() {
     <>
       <Hero />
       <Philosophy />
+      <Chakras />
       <Instructor />
       <Programs />
       <Wellbeing />

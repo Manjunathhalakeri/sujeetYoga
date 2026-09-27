@@ -2,6 +2,7 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Mark } from '@/components/ui/Rule';
+import { LotusDivider } from '@/components/art/LotusDivider';
 import { Reveal } from '@/components/ui/Reveal';
 import { ImageReveal } from '@/components/ui/ImageReveal';
 import { Figure } from '@/components/ui/Figure';
@@ -45,6 +46,10 @@ export function Philosophy() {
             </Reveal>
           </div>
         </div>
+
+        <Reveal>
+          <LotusDivider className="mt-section" />
+        </Reveal>
 
         {/* Body copy and the margin image, offset from each other vertically. */}
         <div className="mt-section gap-block grid lg:grid-cols-12 lg:gap-x-10">
