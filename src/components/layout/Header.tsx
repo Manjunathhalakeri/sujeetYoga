@@ -58,7 +58,10 @@ export function Header() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-40 transition-[background-color,border-color]',
-        'duration-[var(--dur-slow)]',
+        // 400ms, not 700. The ground fades in as you scroll past the hero, and
+        // at --dur-slow there was a visible window where headings passed
+        // under a half-transparent bar and became hard to read.
+        'duration-[var(--dur-base)]',
         // Fully opaque, not translucent. A 95% ivory with a blur let headlines
         // ghost through the bar as they scrolled under it, which read as a
         // rendering fault rather than as a material.
