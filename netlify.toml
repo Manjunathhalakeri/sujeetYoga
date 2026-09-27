@@ -1,0 +1,24 @@
+# Netlify deployment.
+#
+# Netlify detects Next.js and installs its own Next runtime automatically, so
+# this file does not declare a plugin. What it DOES do is pin the Node version:
+# Netlify's default image Node can lag behind, and Next 16 requires >= 20.9.
+# An unpinned build is a build that breaks on someone else's schedule.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Matches local development (v22.17.0) and satisfies next's engines field.
+  # Pinned to a major so security patches still land.
+  NODE_VERSION = "22"
+
+# Deploy previews and branch builds use the same command as production. Keeping
+# them identical is the point: a preview that builds differently from
+# production is a preview that can pass while production fails.
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"

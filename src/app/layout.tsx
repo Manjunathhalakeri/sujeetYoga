@@ -52,9 +52,24 @@ export const metadata: Metadata = {
   robots: siteConfig.isPlaceholder ? { index: false, follow: false } : undefined,
 };
 
+/**
+ * Both values are leftovers from the light theme, corrected here.
+ *
+ * themeColor tints the browser's own chrome on mobile — the address bar on
+ * Android Chrome, the status bar area on iOS. It was still the old ivory
+ * (#f6f3ee), so a dark site opened inside a bright band that belonged to a
+ * design that no longer exists. It must match the page ground, so it is taken
+ * from the --color-ink token rather than written twice.
+ *
+ * colorScheme said `light` on a site whose every surface is now dark. That is
+ * not cosmetic: it tells the browser which way to render things the page does
+ * not style itself — scrollbars, form control defaults, the spellcheck
+ * underline — so they were being drawn for a light page on a dark one.
+ */
 export const viewport: Viewport = {
-  themeColor: '#f6f3ee',
-  colorScheme: 'light',
+  /** Keep in sync with --color-ink in tokens.css. */
+  themeColor: '#14120f',
+  colorScheme: 'dark',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
