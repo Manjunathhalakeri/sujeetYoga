@@ -1,7 +1,7 @@
-import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { Om } from '@/components/art/Om';
 import { Reveal } from '@/components/ui/Reveal';
 import { home } from '@/content/home';
@@ -36,13 +36,7 @@ export function FinalCta() {
               <p className="text-lead text-bone-dim mt-7 max-w-[42ch]">{cta.lead}</p>
 
               <div className="mt-11 flex flex-wrap items-center gap-4">
-                <Button
-                  href={cta.primaryCta.href}
-                  size="lg"
-                  icon={<ArrowRight size={17} strokeWidth={1.75} />}
-                >
-                  {cta.primaryCta.label}
-                </Button>
+                <PrimaryCta size="lg" />
                 <Button href={cta.secondaryCta.href} variant="quiet">
                   {cta.secondaryCta.label}
                 </Button>

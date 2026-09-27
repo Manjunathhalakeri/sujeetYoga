@@ -36,7 +36,12 @@ export const home = {
     /** Split across lines deliberately — each entry is one rendered line. */
     headlineLines: ['Practice that', 'stays with you', 'off the mat.'],
     lead: 'Placeholder introduction. One or two sentences on what the practice is, who it is for, and what a person can expect to feel after it.',
-    primaryCta: { label: 'Enquire about classes', href: '/contact' },
+    /**
+     * ⚠ There is no `primaryCta` here. The site's primary action — WhatsApp —
+     * is resolved in one place by `primaryAction()` in lib/contact.ts, so that
+     * "where does the main button go" is a single decision. Edit the wording in
+     * siteConfig.cta. Only the secondary CTA is set per-section.
+     */
     secondaryCta: { label: 'Explore programmes', href: '/programs' },
     /** Small metadata rail under the hero. Facts go here once known. */
     rail: [
@@ -131,7 +136,7 @@ export const home = {
   cta: {
     heading: 'Begin where you are.',
     lead: 'Placeholder. A closing line inviting a first conversation, with no pressure and no pricing implied.',
-    primaryCta: { label: 'Send an enquiry', href: '/contact' },
+    /** No `primaryCta` — see the note on hero above. */
     secondaryCta: { label: 'See the schedule', href: '/schedule' },
   },
 } as const;

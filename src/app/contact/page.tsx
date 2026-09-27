@@ -3,12 +3,12 @@ import { MessageCircle, Mail, Phone, AtSign, MapPin } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Mark } from '@/components/ui/Rule';
 import { Reveal } from '@/components/ui/Reveal';
 import { EnquiryForm } from '@/components/forms/EnquiryForm';
-import { contactState, mailtoUrl, telUrl, whatsappUrl } from '@/lib/contact';
+import { contactState, enquiryWhatsappUrl, mailtoUrl, telUrl } from '@/lib/contact';
 import { siteConfig } from '@/content/siteConfig';
 
 export const metadata: Metadata = {
@@ -76,7 +76,8 @@ function ContactRow({
 }
 
 export default function ContactPage() {
-  const wa = whatsappUrl('Hello — I would like to ask about classes.');
+  const wa = enquiryWhatsappUrl();
+  const waDisplay = contactState.whatsappDisplay;
   const tel = telUrl();
   const mail = mailtoUrl('Class enquiry');
   const instagram = contactState.instagram;
@@ -120,14 +121,20 @@ export default function ContactPage() {
                     India. Rendered as a real CTA only once a number exists. */}
                 <div className="mt-8">
                   {wa ? (
-                    <Button
-                      href={wa}
-                      size="lg"
-                      block
-                      icon={<MessageCircle size={17} strokeWidth={1.75} />}
-                    >
-                      Message on WhatsApp
-                    </Button>
+                    <>
+                      <PrimaryCta size="lg" block />
+                      {/* The number in full, as plain selectable text rather
+                          than a second link. Someone deciding whether to get in
+                          touch often wants to save the number first, and on a
+                          desktop the wa.me link alone gives them nothing to
+                          write down. */}
+                      {waDisplay ? (
+                        <p className="text-small text-bone-dim mt-4 text-center">
+                          <span className="text-bone-faint">WhatsApp</span>{' '}
+                          <span className="nums-tabular text-bone">{waDisplay}</span>
+                        </p>
+                      ) : null}
+                    </>
                   ) : (
                     <div className="rule-t rule-b bg-ink-raised/60 px-4 py-5">
                       <div className="text-eyebrow text-bone-faint flex items-center gap-2 uppercase">

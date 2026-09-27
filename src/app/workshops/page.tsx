@@ -5,6 +5,7 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
 import { ImageReveal } from '@/components/ui/ImageReveal';
 import { PageHeader } from '@/components/sections/PageHeader';
@@ -217,7 +218,8 @@ export default function WorkshopsPage() {
                 announced.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Button href="/contact" size="lg">
+                <PrimaryCta size="lg" />
+                <Button href="/contact" variant="quiet">
                   {siteConfig.cta.primaryLabel}
                 </Button>
               </div>

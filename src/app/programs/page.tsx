@@ -6,6 +6,7 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { RevealGroup, RevealItem, Reveal } from '@/components/ui/Reveal';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { images } from '@/content/assets';
@@ -132,8 +133,9 @@ export default function ProgramsIndexPage() {
             <p className="text-lead text-bone-dim mt-7 max-w-[40ch]">
               Placeholder. A line inviting a conversation rather than a booking.
             </p>
-            <div className="mt-11">
-              <Button href={siteConfig.cta.primaryHref} size="lg">
+            <div className="mt-11 flex flex-wrap items-center gap-4">
+              <PrimaryCta size="lg" />
+              <Button href="/contact" variant="quiet">
                 {siteConfig.cta.primaryLabel}
               </Button>
             </div>

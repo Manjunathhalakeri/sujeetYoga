@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import {
   DURATION,
@@ -208,13 +208,7 @@ export function Hero() {
             <p className="text-lead text-bone-dim mt-8 max-w-[38ch]">{hero.lead}</p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Button
-                href={hero.primaryCta.href}
-                size="lg"
-                icon={<ArrowRight size={17} strokeWidth={1.75} />}
-              >
-                {hero.primaryCta.label}
-              </Button>
+              <PrimaryCta size="lg" />
               <Button href={hero.secondaryCta.href} variant="quiet">
                 {hero.secondaryCta.label}
               </Button>

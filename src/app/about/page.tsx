@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { Badge } from '@/components/ui/Badge';
 import { Figure } from '@/components/ui/Figure';
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
@@ -206,15 +206,9 @@ export default function AboutPage() {
                 {about.cta.lead}
               </p>
               <div className="mt-11 flex flex-wrap items-center gap-4">
-                <Button
-                  href="/contact"
-                  size="lg"
-                  icon={<ArrowRight size={17} strokeWidth={1.75} />}
-                >
+                <PrimaryCta size="lg" />
+                <Button href="/contact" variant="quiet">
                   {siteConfig.cta.primaryLabel}
-                </Button>
-                <Button href="/programs" variant="quiet">
-                  See the programmes
                 </Button>
               </div>
             </Reveal>

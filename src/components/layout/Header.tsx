@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { cn } from '@/lib/cn';
 import { DURATION, EASE, EASE_IN_OUT, gsap, useGSAP } from '@/lib/motion';
 import { navigation, siteConfig } from '@/content/siteConfig';
@@ -180,9 +180,10 @@ export function Header() {
               </Link>
             );
           })}
-          <Button href={siteConfig.cta.primaryHref} size="sm">
-            Enquire
-          </Button>
+          {/* Short label here only — the header has no room for the full
+              sentence, and the icon plus "WhatsApp" still names the
+              destination before it is tapped. */}
+          <PrimaryCta size="sm" short />
         </nav>
 
         {/* Mobile trigger */}
@@ -242,14 +243,10 @@ export function Header() {
             </nav>
 
             <div className="mt-10">
-              <Button
-                href={siteConfig.cta.primaryHref}
-                size="lg"
-                block
-                onClick={() => setOpen(false)}
-              >
-                {siteConfig.cta.primaryLabel}
-              </Button>
+              {/* Closes the overlay as it goes: the link opens WhatsApp in a
+                  new tab, so without this the menu would still be covering the
+                  site on return. */}
+              <PrimaryCta size="lg" block onClick={() => setOpen(false)} />
             </div>
           </Container>
         </div>

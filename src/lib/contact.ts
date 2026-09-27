@@ -10,8 +10,12 @@ import { siteConfig } from '@/content/siteConfig';
  *
  * The placeholders in siteConfig are deliberately recognisable:
  *   phone     +910000000000
- *   whatsapp  910000000000
  *   email     hello@example.com
+ *
+ * WhatsApp is now a real, client-supplied number, so `whatsappUrl()` returns a
+ * live link. The guard around it is kept rather than deleted: if the number is
+ * ever cleared or reverted to a placeholder, every CTA on the site falls back
+ * to the enquiry form instead of silently shipping a dead `wa.me` link.
  */
 
 /** A phone/WhatsApp value that is still the placeholder. */
@@ -33,6 +37,10 @@ export const contactState = {
   get whatsapp(): string | null {
     const v = siteConfig.contact.whatsapp;
     return isPlaceholderNumber(v) ? null : v;
+  },
+  /** The reader-facing spelling, or null while the number is a placeholder. */
+  get whatsappDisplay(): string | null {
+    return contactState.whatsapp ? siteConfig.contact.whatsappDisplay : null;
   },
   get address(): string | null {
     return siteConfig.contact.address;
@@ -67,4 +75,46 @@ export function mailtoUrl(subject?: string): string | null {
   return subject
     ? `mailto:${email}?subject=${encodeURIComponent(subject)}`
     : `mailto:${email}`;
+}
+
+/** The standard enquiry deep link, with the site's one agreed opening message. */
+export function enquiryWhatsappUrl(): string | null {
+  return whatsappUrl(siteConfig.cta.whatsappMessage);
+}
+
+/**
+ * THE PRIMARY CALL TO ACTION — resolved in one place, used by every surface.
+ *
+ * Every primary button on the site asks this function where it goes and what it
+ * says, so "what is the main thing we want a visitor to do" is a single
+ * decision in the data rather than eight independent decisions in eight files.
+ *
+ * It degrades rather than breaks: with no WhatsApp number the same button
+ * points at the enquiry form. No surface has to handle a null.
+ */
+export interface PrimaryAction {
+  href: string;
+  label: string;
+  /** Short label, for the header. */
+  shortLabel: string;
+  /** Lets a caller show the WhatsApp icon only when it is actually WhatsApp. */
+  isWhatsapp: boolean;
+}
+
+export function primaryAction(): PrimaryAction {
+  const wa = enquiryWhatsappUrl();
+  if (wa) {
+    return {
+      href: wa,
+      label: siteConfig.cta.whatsappLabel,
+      shortLabel: siteConfig.cta.whatsappLabelShort,
+      isWhatsapp: true,
+    };
+  }
+  return {
+    href: siteConfig.cta.primaryHref,
+    label: siteConfig.cta.primaryLabel,
+    shortLabel: siteConfig.cta.primaryLabel,
+    isWhatsapp: false,
+  };
 }

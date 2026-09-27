@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Fragment } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Mark } from '@/components/ui/Rule';
@@ -10,6 +10,7 @@ import { LotusDivider } from '@/components/art/LotusDivider';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
+import { PrimaryCta } from '@/components/ui/PrimaryCta';
 import { Badge } from '@/components/ui/Badge';
 import { Figure } from '@/components/ui/Figure';
 import { TextLink } from '@/components/ui/TextLink';
@@ -173,9 +174,11 @@ export default async function ProgramDetailPage({
                   ))}
                 </dl>
                 <div className="mt-8">
-                  <Button href="/contact" block>
-                    Enquire about {program.title.toLowerCase()}
-                  </Button>
+                  <PrimaryCta block />
+                  <p className="text-micro text-bone-faint mt-3">
+                    Or{' '}
+                    <TextLink href="/contact">send an enquiry instead</TextLink>.
+                  </p>
                 </div>
               </Reveal>
             </div>
@@ -291,11 +294,8 @@ export default async function ProgramDetailPage({
                   Begin where you are.
                 </h2>
                 <div className="mt-11 flex flex-wrap items-center gap-4">
-                  <Button
-                    href="/contact"
-                    size="lg"
-                    icon={<ArrowRight size={17} strokeWidth={1.75} />}
-                  >
+                  <PrimaryCta size="lg" />
+                  <Button href="/contact" variant="quiet">
                     {siteConfig.cta.primaryLabel}
                   </Button>
                 </div>

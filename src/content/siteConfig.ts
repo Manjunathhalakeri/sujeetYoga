@@ -68,8 +68,18 @@ export const siteConfig = {
     email: 'hello@example.com',
     /** TODO: real number in E.164 format, e.g. +919876543210. */
     phone: '+910000000000',
-    /** TODO: WhatsApp number in E.164 without the +, for wa.me links. */
-    whatsapp: '910000000000',
+    /**
+     * Client-supplied. E.164, no `+`, no spaces — this is the exact form
+     * wa.me requires in the path.
+     */
+    whatsapp: '918416830167',
+    /**
+     * The same number, formatted for a human to read or copy down.
+     * Held separately rather than derived: grouping digits correctly is a
+     * per-country convention, not a rule a formatter can infer from E.164.
+     * ⚠ Must always be the same number as `whatsapp` above.
+     */
+    whatsappDisplay: '+91 84168 30167',
     /** TODO: full street address, or leave null if the studio is not public. */
     address: null as string | null,
   },
@@ -95,6 +105,25 @@ export const siteConfig = {
   footerNote: 'Placeholder. A short closing line about the practice belongs here.',
 
   cta: {
+    /**
+     * WhatsApp is the primary call to action across the site. In India it is
+     * where enquiries actually arrive, and it costs the visitor nothing —
+     * no form, no inbox, no waiting to find out whether the message landed.
+     *
+     * `whatsappLabel` names the destination on purpose. A button that opens a
+     * different app should say which one before it is tapped.
+     */
+    whatsappLabel: 'Message on WhatsApp',
+    /** Short form, for the header where horizontal space is tight. */
+    whatsappLabelShort: 'WhatsApp',
+    /** Pre-filled into the chat. Client-supplied wording — do not embellish. */
+    whatsappMessage:
+      'Hi Sujit, I found your website and want to know about classes.',
+
+    /**
+     * The fallback, used only if the WhatsApp number is ever unset. Keeping it
+     * means the primary CTA degrades to the enquiry form rather than vanishing.
+     */
     primaryLabel: 'Enquire about classes',
     primaryHref: '/contact',
     secondaryLabel: 'Explore programmes',
