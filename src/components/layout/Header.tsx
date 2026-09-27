@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/cn';
-import { DURATION, EASE, EASE_IN_OUT } from '@/lib/motion';
+import { DURATION, EASE, EASE_IN_OUT, gsap, useGSAP } from '@/lib/motion';
 import { navigation, siteConfig } from '@/content/siteConfig';
 
 /**
@@ -28,8 +28,24 @@ import { navigation, siteConfig } from '@/content/siteConfig';
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  /**
+   * GSAP has no AnimatePresence, so the overlay's exit is handled explicitly:
+   * `mounted` keeps the node in the tree while the closing tween plays, and the
+   * tween's onComplete unmounts it. That is the whole of what AnimatePresence
+   * was doing here.
+   */
+  const [mounted, setMounted] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  // Mounting happens in the handler, not in an effect on `open`: the node has
+  // to exist before the opening tween runs, and deriving it from state in an
+  // effect is both a render-order hazard and a lint error.
+  const openMenu = useCallback(() => {
+    setMounted(true);
+    setOpen(true);
+  }, []);
+  const closeMenu = useCallback(() => setOpen(false), []);
   const pathname = usePathname();
-  const reduced = useReducedMotion();
 
   // Ground appears after the first screenful of hero.
   useEffect(() => {
@@ -39,20 +55,86 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  /**
+   * Open and close the overlay.
+   *
+   * `matchMedia` gives the reduced-motion branch for free: when the query
+   * matches, the panel and its links resolve as a plain fade with no travel,
+   * and GSAP reverts the branch automatically if the preference changes.
+   *
+   * The closing tween owns the unmount — `setMounted(false)` runs in
+   * onComplete, so the node survives exactly as long as its exit animation.
+   */
+  useGSAP(
+    () => {
+      const el = overlayRef.current;
+      if (!mounted || !el) return;
+
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          motion: '(prefers-reduced-motion: no-preference)',
+          reduced: '(prefers-reduced-motion: reduce)',
+        },
+        (ctx) => {
+          const { reduced } = ctx.conditions as { reduced: boolean };
+          const items = el.querySelectorAll<HTMLElement>('[data-menu-item]');
+
+          if (open) {
+            gsap.fromTo(
+              el,
+              { autoAlpha: 0, y: reduced ? 0 : -12 },
+              {
+                autoAlpha: 1,
+                y: 0,
+                duration: reduced ? DURATION.quick : DURATION.slow,
+                ease: EASE_IN_OUT,
+              },
+            );
+            gsap.fromTo(
+              items,
+              { autoAlpha: 0, y: reduced ? 0 : 12 },
+              {
+                autoAlpha: 1,
+                y: 0,
+                duration: reduced ? DURATION.quick : DURATION.base,
+                ease: EASE,
+                delay: reduced ? 0 : 0.06,
+                stagger: reduced ? 0 : 0.05,
+              },
+            );
+          } else {
+            gsap.to(el, {
+              autoAlpha: 0,
+              y: reduced ? 0 : -12,
+              duration: reduced ? DURATION.quick : DURATION.slow,
+              ease: EASE_IN_OUT,
+              onComplete: () => setMounted(false),
+            });
+          }
+        },
+      );
+
+      return () => mm.revert();
+    },
+    { dependencies: [open, mounted], scope: overlayRef },
+  );
+
   // While the overlay is open: lock the page behind it and allow Escape to close.
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') closeMenu();
     };
     window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = previous;
       window.removeEventListener('keydown', onKey);
     };
-  }, [open]);
+  }, [open, closeMenu]);
 
   return (
     <header
@@ -106,7 +188,7 @@ export function Header() {
         {/* Mobile trigger */}
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => (open ? closeMenu() : openMenu())}
           aria-expanded={open}
           aria-controls="mobile-menu"
           // min-h-11 / min-w-11 keeps this at the 44px minimum touch target.
@@ -118,75 +200,60 @@ export function Header() {
         </button>
       </Container>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id="mobile-menu"
-            className="bg-ink fixed inset-0 top-0 z-50 flex flex-col lg:hidden"
-            initial={reduced ? { opacity: 0 } : { opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduced ? { opacity: 0 } : { opacity: 0, y: -12 }}
-            transition={{ duration: DURATION.slow, ease: EASE_IN_OUT }}
-          >
-            <Container className="flex h-[var(--header-h)] shrink-0 items-center justify-between">
-              <span className="text-h4 font-display">
-                {siteConfig.wordmark.lead}
-                <span className="text-bone-dim"> {siteConfig.wordmark.trail}</span>
-              </span>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="text-eyebrow -mr-3 inline-flex min-h-11 min-w-11 items-center justify-center rounded-xs px-3 uppercase"
-                autoFocus
-              >
-                Close
-              </button>
-            </Container>
+      {mounted ? (
+        <div
+          id="mobile-menu"
+          ref={overlayRef}
+          className="bg-ink fixed inset-0 top-0 z-50 flex flex-col lg:hidden"
+        >
+          <Container className="flex h-[var(--header-h)] shrink-0 items-center justify-between">
+            <span className="text-h4 font-display">
+              {siteConfig.wordmark.lead}
+              <span className="text-bone-dim"> {siteConfig.wordmark.trail}</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="text-eyebrow -mr-3 inline-flex min-h-11 min-w-11 items-center justify-center rounded-xs px-3 uppercase"
+              autoFocus
+            >
+              Close
+            </button>
+          </Container>
 
-            <Container className="flex flex-1 flex-col justify-center">
-              <nav aria-label="Primary (mobile)">
-                <ul>
-                  {navigation.map((item, i) => (
-                    <motion.li
-                      key={item.href}
-                      className="rule-b"
-                      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: DURATION.base,
-                        ease: EASE,
-                        delay: reduced ? 0 : 0.06 + i * 0.05,
-                      }}
+          <Container className="flex flex-1 flex-col justify-center">
+            <nav aria-label="Primary (mobile)">
+              <ul>
+                {navigation.map((item) => (
+                  <li key={item.href} data-menu-item="" className="rule-b">
+                    <Link
+                      href={item.href}
+                      // Closing here rather than in an effect on `pathname`:
+                      // navigating to the current route fires no path change,
+                      // which would leave the overlay stuck open.
+                      onClick={() => setOpen(false)}
+                      className="text-display-2 font-display block py-5"
                     >
-                      <Link
-                        href={item.href}
-                        // Closing here rather than in an effect on `pathname`:
-                        // navigating to the current route fires no path change,
-                        // which would leave the overlay stuck open.
-                        onClick={() => setOpen(false)}
-                        className="text-display-2 font-display block py-5"
-                      >
-                        {item.label}
-                      </Link>
-                    </motion.li>
-                  ))}
-                </ul>
-              </nav>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-              <div className="mt-10">
-                <Button
-                  href={siteConfig.cta.primaryHref}
-                  size="lg"
-                  block
-                  onClick={() => setOpen(false)}
-                >
-                  {siteConfig.cta.primaryLabel}
-                </Button>
-              </div>
-            </Container>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+            <div className="mt-10">
+              <Button
+                href={siteConfig.cta.primaryHref}
+                size="lg"
+                block
+                onClick={() => setOpen(false)}
+              >
+                {siteConfig.cta.primaryLabel}
+              </Button>
+            </div>
+          </Container>
+        </div>
+      ) : null}
     </header>
   );
 }

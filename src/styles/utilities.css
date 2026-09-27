@@ -129,10 +129,11 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   /* Promote once to its own layer so it is never repainted while scrolling.
-     This is the one place will-change-style promotion genuinely pays for
-     itself: a single static layer, created once, for the life of the page. */
+     translateZ(0) alone does the promotion. `will-change: transform` was here
+     too and has been removed: this element never animates, and will-change on
+     a static element just pins a compositor layer and its memory for the life
+     of the page for no benefit. Measured identical scroll cost without it. */
   transform: translateZ(0);
-  will-change: transform;
 }
 
 /* ---------- vignette ----------

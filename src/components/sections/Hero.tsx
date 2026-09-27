@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { motion, useReducedMotion } from 'motion/react';
+import { useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { DURATION, EASE } from '@/lib/motion';
+import { DURATION, EASE, gsap, useGSAP } from '@/lib/motion';
 import { Mandala } from '@/components/art/Mandala';
 import { images } from '@/content/assets';
 import { home } from '@/content/home';
@@ -30,28 +30,89 @@ import { home } from '@/content/home';
  * - The photograph unmasks upward while settling from a 6% over-scale.
  * Both run once, on load, on the shared brand curve. Under reduced motion the
  * masks and transforms are dropped and only opacity remains.
+ *
+ * One timeline drives the whole opening rather than five independently delayed
+ * tweens — which is the main thing GSAP buys here. The sequence is expressed as
+ * positions on a timeline instead of arithmetic on `delay`, so retiming the
+ * hero means moving one label, not recalculating four numbers.
  */
 export function Hero() {
-  const reduced = useReducedMotion();
+  const root = useRef<HTMLElement>(null);
   const { hero } = home;
 
-  // Line masks cannot be expressed with the shared <Reveal>, so the hero uses
-  // its own variants. This is the one component allowed to.
-  const line = {
-    hidden: reduced ? { opacity: 0 } : { y: '110%' },
-    visible: (i: number) => ({
-      y: '0%',
-      opacity: 1,
-      transition: {
-        duration: reduced ? DURATION.quick : DURATION.slow,
-        ease: EASE,
-        delay: reduced ? 0 : 0.15 + i * 0.09,
-      },
-    }),
-  };
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          motion: '(prefers-reduced-motion: no-preference)',
+          reduced: '(prefers-reduced-motion: reduce)',
+        },
+        (ctx) => {
+          const { reduced } = ctx.conditions as { reduced: boolean };
+          const tl = gsap.timeline({ defaults: { ease: EASE } });
+
+          if (reduced) {
+            // Everything resolves as a plain fade, nothing moves.
+            tl.fromTo(
+              [
+                '[data-hero-eyebrow]',
+                '[data-hero-line]',
+                '[data-hero-body]',
+                '[data-hero-media]',
+              ],
+              { autoAlpha: 0 },
+              { autoAlpha: 1, duration: DURATION.quick, stagger: 0.04 },
+            );
+            return;
+          }
+
+          tl.fromTo(
+            '[data-hero-eyebrow]',
+            { autoAlpha: 0 },
+            { autoAlpha: 1, duration: DURATION.base },
+            0,
+          )
+            // Each line rises out of its own mask. yPercent, not y, so the
+            // travel scales with the line height rather than a fixed pixel.
+            .fromTo(
+              '[data-hero-line]',
+              { yPercent: 110 },
+              { yPercent: 0, duration: DURATION.slow, stagger: 0.09 },
+              0.15,
+            )
+            .fromTo(
+              '[data-hero-body]',
+              { autoAlpha: 0, y: 12 },
+              { autoAlpha: 1, y: 0, duration: DURATION.base },
+              0.5,
+            )
+            // Mask and scale share a start and a curve, so they read as one
+            // gesture rather than two effects.
+            .fromTo(
+              '[data-hero-media]',
+              { clipPath: 'inset(0% 0% 100% 0%)' },
+              { clipPath: 'inset(0% 0% 0% 0%)', duration: DURATION.reveal },
+              0.1,
+            )
+            .fromTo(
+              '[data-hero-media-inner]',
+              { scale: 1.06 },
+              { scale: 1, duration: DURATION.reveal },
+              0.1,
+            );
+        },
+      );
+
+      return () => mm.revert();
+    },
+    { scope: root },
+  );
 
   return (
     <section
+      ref={root}
       aria-labelledby="hero-heading"
       className="pb-section relative overflow-hidden pt-[calc(var(--header-h)+2rem)] lg:pt-[calc(var(--header-h)+4rem)] lg:pb-0"
     >
@@ -69,48 +130,33 @@ export function Hero() {
       <Container className="relative z-10 lg:grid lg:min-h-[86vh] lg:grid-cols-12 lg:items-center lg:gap-x-10">
         {/* ---------------- Type ---------------- */}
         <div className="lg:pb-section relative z-10 lg:col-span-6">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: DURATION.base, ease: EASE }}
-          >
+          <div data-hero-eyebrow="" data-reveal="">
             <Eyebrow className="text-clay">{hero.eyebrow}</Eyebrow>
-          </motion.div>
+          </div>
 
           <h1
             id="hero-heading"
             className="text-hero font-display optical-left mt-6 text-balance"
           >
-            {hero.headlineLines.map((text, i) => (
+            {hero.headlineLines.map((text) => (
               // Each line gets its own mask so the reveal reads as typesetting.
               <span key={text} className="block overflow-hidden pb-[0.06em]">
-                <motion.span
+                <span
                   // data-reveal is what the <noscript> rule in layout.tsx
                   // targets. Without it a failed or blocked script would leave
                   // the h1 — the page's most important text and its LCP
                   // element — permanently hidden behind its own mask.
                   data-reveal=""
+                  data-hero-line=""
                   className="block"
-                  custom={i}
-                  variants={line}
-                  initial="hidden"
-                  animate="visible"
                 >
                   {text}
-                </motion.span>
+                </span>
               </span>
             ))}
           </h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: reduced ? 0 : 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: DURATION.base,
-              ease: EASE,
-              delay: reduced ? 0 : 0.5,
-            }}
-          >
+          <div data-hero-body="" data-reveal="">
             <p className="text-lead text-bone-dim mt-8 max-w-[38ch]">{hero.lead}</p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -135,7 +181,7 @@ export function Hero() {
                 </div>
               ))}
             </dl>
-          </motion.div>
+          </div>
         </div>
 
         {/* ---------------- Photograph ----------------
@@ -143,35 +189,17 @@ export function Hero() {
             escaping the container gutter. Below lg it becomes a normal
             full-width block under the type. */}
         <div className="mt-14 lg:col-span-6 lg:mt-0 lg:self-stretch">
-          <motion.div
+          <div
             // The image starts BELOW the header rather than at the section top.
             // Running it to the very top put the navigation on top of
             // photography, where stone-on-photo failed contrast and looked
             // accidental. Starting at --header-h keeps the right-edge bleed but
             // leaves the nav on the ivory ground.
+            data-hero-media=""
+            data-reveal=""
             className="img-frame img-duotone vignette relative aspect-[4/5] w-full sm:aspect-[3/2] lg:absolute lg:top-[var(--header-h)] lg:right-0 lg:bottom-0 lg:aspect-auto lg:h-auto lg:w-[48vw]"
-            initial={
-              reduced ? { opacity: 0 } : { opacity: 1, clipPath: 'inset(0 0 100% 0)' }
-            }
-            animate={
-              reduced ? { opacity: 1 } : { opacity: 1, clipPath: 'inset(0 0 0% 0)' }
-            }
-            transition={{
-              duration: reduced ? DURATION.base : DURATION.reveal,
-              ease: EASE,
-              delay: reduced ? 0 : 0.1,
-            }}
           >
-            <motion.div
-              className="h-full w-full"
-              initial={reduced ? undefined : { scale: 1.06 }}
-              animate={reduced ? undefined : { scale: 1 }}
-              transition={{
-                duration: reduced ? 0 : DURATION.reveal,
-                ease: EASE,
-                delay: reduced ? 0 : 0.1,
-              }}
-            >
+            <div data-hero-media-inner="" className="h-full w-full">
               <Image
                 src={images.hero.src}
                 alt={images.hero.alt}
@@ -181,8 +209,8 @@ export function Hero() {
                 sizes="(min-width: 1024px) 48vw, 100vw"
                 className="object-cover"
               />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </Container>
     </section>

@@ -1,31 +1,44 @@
+'use client';
+
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CustomEase } from 'gsap/CustomEase';
+import { useGSAP } from '@gsap/react';
+
 /**
- * MOTION TOKENS
+ * MOTION TOKENS — now GSAP.
  *
  * One easing curve, four durations, one travel distance. Every animated
- * component reads from here, so the whole site shares a single sense of
- * weight and the timing can be retuned globally in one edit.
+ * component reads from here, so the whole site shares a single sense of weight
+ * and the timing can be retuned globally in one edit.
  *
- * Rule of the system: motion is only ever used for entrance, state change,
- * and navigation. Never idle, never ambient, never decorative.
+ * Rule of the system, unchanged: motion is only ever used for entrance, state
+ * change, and navigation. Never idle, never ambient, never decorative.
+ *
+ * ────────────────────────────────────────────────────────────────────────────
+ * WHY THE EASE IS A CustomEase AND NOT `power4.out`
+ *
+ * The CSS layer (`--ease-brand`, and every Tailwind `transition-*` utility)
+ * uses cubic-bezier(0.22, 1, 0.36, 1). GSAP's `power4.out` is very close to it
+ * but not identical, and hover states sit right next to entrance animations all
+ * over this site. Two curves that are nearly the same read as a mistake rather
+ * than as a choice.
+ *
+ * CustomEase takes the exact same four control points, so JavaScript and CSS
+ * motion are provably the same curve. It ships in the gsap package — no extra
+ * dependency.
+ * ────────────────────────────────────────────────────────────────────────────
  */
 
-import type { Transition, Variants } from 'motion/react';
+// Register once, at module load, before any component runs a tween.
+// useGSAP is registered too so GSAP knows about its cleanup lifecycle.
+gsap.registerPlugin(useGSAP, ScrollTrigger, CustomEase);
 
-/** The one curve. Fast out of the gate, long gentle settle. */
-export const EASE = [0.22, 1, 0.36, 1] as const satisfies [
-  number,
-  number,
-  number,
-  number,
-];
+/** The one curve. Identical to --ease-brand in tokens.css. */
+export const EASE = CustomEase.create('brand', '0.22, 1, 0.36, 1');
 
-/** Symmetric curve, only for things that move and come back (menus, accordions). */
-export const EASE_IN_OUT = [0.65, 0, 0.35, 1] as const satisfies [
-  number,
-  number,
-  number,
-  number,
-];
+/** Symmetric curve, only for things that move and come back (menus). */
+export const EASE_IN_OUT = CustomEase.create('brandInOut', '0.65, 0, 0.35, 1');
 
 export const DURATION = {
   /** Hover, focus, button press. */
@@ -41,66 +54,20 @@ export const DURATION = {
 /** Entrance travel. Deliberately small — premium motion is short, not far. */
 export const DISTANCE = 16;
 
-export const transition: Transition = {
+/**
+ * Where a scroll reveal fires.
+ *
+ * Motion's `viewport={{ margin: '0px 0px -12% 0px' }}` shrank the bottom of the
+ * viewport by 12%, so an element had to clear that line before animating.
+ * ScrollTrigger's equivalent is `start: 'top 88%'` — the element's top reaching
+ * 88% of the way down the viewport. Same trigger point, different spelling.
+ */
+export const REVEAL_START = 'top 88%';
+
+/** Applied to every reveal so the whole site shares one entrance feel. */
+export const revealVars = {
   duration: DURATION.base,
   ease: EASE,
-};
+} as const;
 
-export const transitionSlow: Transition = {
-  duration: DURATION.slow,
-  ease: EASE,
-};
-
-/** Viewport trigger shared by all scroll reveals: fires slightly early so the
- *  animation is already settling by the time the element is comfortably read. */
-export const VIEWPORT = { once: true, margin: '0px 0px -12% 0px' } as const;
-
-/* ------------------------------------------------------------------ */
-/* Variants                                                            */
-/* ------------------------------------------------------------------ */
-
-export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: DISTANCE },
-  visible: { opacity: 1, y: 0, transition },
-};
-
-export const fadeIn: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition },
-};
-
-/** Reduced-motion substitute: state changes, but nothing moves. */
-export const fadeOnly: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: DURATION.quick, ease: EASE } },
-};
-
-/** Parent wrapper that walks its children in sequence. */
-export function staggerParent(stagger = 0.08, delayChildren = 0): Variants {
-  return {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: stagger, delayChildren },
-    },
-  };
-}
-
-/** Hero image: an unmasking wipe plus a slow scale settle. Tier 3. */
-export const imageReveal: Variants = {
-  hidden: { clipPath: 'inset(0 0 100% 0)', scale: 1.06 },
-  visible: {
-    clipPath: 'inset(0 0 0% 0)',
-    scale: 1,
-    transition: { duration: DURATION.reveal, ease: EASE },
-  },
-};
-
-/** Hero headline, animated per line. Tier 3. */
-export const lineReveal: Variants = {
-  hidden: { opacity: 0, y: '0.4em' },
-  visible: {
-    opacity: 1,
-    y: '0em',
-    transition: { duration: DURATION.slow, ease: EASE },
-  },
-};
+export { gsap, ScrollTrigger, useGSAP };
