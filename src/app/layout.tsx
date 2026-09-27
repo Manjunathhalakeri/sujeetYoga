@@ -70,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-dvh antialiased">
         <a
           href="#main"
-          className="sr-only-focusable bg-charcoal text-small text-ivory absolute top-4 left-4 z-50 px-4 py-3"
+          className="sr-only-focusable bg-bone text-ink text-small absolute top-4 left-4 z-50 px-4 py-3"
         >
           Skip to content
         </a>

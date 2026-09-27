@@ -27,16 +27,16 @@ export function Footer() {
   const socials = Object.values(social).filter((p) => p !== null);
 
   return (
-    <Section as="footer" surface="ivory" spacing="default" ruled className="pb-10">
+    <Section as="footer" surface="ink" spacing="default" ruled className="pb-10">
       <Container>
         <div className="gap-block grid lg:grid-cols-12">
           {/* Wordmark — deliberately oversized, deliberately left. */}
           <div className="lg:col-span-5">
             <p className="text-display-2 font-display leading-[0.95]">
               {siteConfig.wordmark.lead}
-              <span className="text-stone block">{siteConfig.wordmark.trail}</span>
+              <span className="text-bone-dim block">{siteConfig.wordmark.trail}</span>
             </p>
-            <p className="text-small text-stone mt-6 max-w-[34ch]">
+            <p className="text-small text-bone-dim mt-6 max-w-[34ch]">
               {siteConfig.footerNote}
             </p>
           </div>
@@ -51,7 +51,7 @@ export function Footer() {
                 <li key={item.href}>
                   <TextLink
                     href={item.href}
-                    className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
+                    className="text-small text-bone-dim hover:text-bone block py-3.5 lg:py-0"
                   >
                     {item.label}
                   </TextLink>
@@ -70,7 +70,7 @@ export function Footer() {
                 <li>
                   <TextLink
                     href={`mailto:${contact.email}`}
-                    className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
+                    className="text-small text-bone-dim hover:text-bone block py-3.5 lg:py-0"
                   >
                     {contact.email}
                   </TextLink>
@@ -84,7 +84,7 @@ export function Footer() {
                 <li>
                   <TextLink
                     href={`tel:${contact.phone}`}
-                    className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
+                    className="text-small text-bone-dim hover:text-bone block py-3.5 lg:py-0"
                   >
                     {contact.phone}
                   </TextLink>
@@ -94,7 +94,7 @@ export function Footer() {
                   <Badge tone="placeholder">TODO: phone</Badge>
                 </li>
               )}
-              <li className="text-small text-stone py-3.5 lg:py-0">
+              <li className="text-small text-bone-dim py-3.5 lg:py-0">
                 {contact.address ?? <Badge tone="placeholder">TODO: address</Badge>}
               </li>
             </ul>
@@ -111,10 +111,10 @@ export function Footer() {
                   <li key={profile.url}>
                     <TextLink
                       href={profile.url}
-                      className="text-small text-stone hover:text-charcoal block py-3.5 lg:py-0"
+                      className="text-small text-bone-dim hover:text-bone block py-3.5 lg:py-0"
                     >
                       {profile.label}
-                      <span className="text-stone-400"> · {profile.handle}</span>
+                      <span className="text-bone-faint"> · {profile.handle}</span>
                     </TextLink>
                   </li>
                 ))}
@@ -125,7 +125,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="rule-t text-micro mt-section flex flex-col gap-3 pt-6 text-stone-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="rule-t text-micro mt-section text-bone-faint flex flex-col gap-3 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>

@@ -45,7 +45,11 @@ export default function AboutPage() {
       />
 
       {/* ---------------- Story: portrait RIGHT, inverting the homepage ------- */}
-      <Section surface="alt" spacing="loose" labelledBy="story-heading">
+      {/* `lifted` is the lightest ground in the ramp. Long prose sits on it so
+          body copy is raised slightly out of the page, which matters more on
+          dark than on light: light-on-dark text blooms, and a fractionally
+          lighter ground reduces the halo. */}
+      <Section surface="lifted" spacing="loose" labelledBy="story-heading">
         <Container>
           <div className="gap-block grid lg:grid-cols-12 lg:gap-x-10">
             <div className="lg:col-span-6">
@@ -60,7 +64,7 @@ export default function AboutPage() {
                 </SectionHeading>
                 <div className="mt-10 space-y-6">
                   {about.story.body.map((p) => (
-                    <p key={p} className="max-w-copy text-stone">
+                    <p key={p} className="max-w-copy text-bone-dim">
                       {p}
                     </p>
                   ))}
@@ -109,12 +113,12 @@ export default function AboutPage() {
                 {about.approach.points.map((point, i) => (
                   <RevealItem as="li" key={point.title} className="rule-b py-7">
                     <div className="flex items-start gap-5 sm:gap-8">
-                      <span className="text-eyebrow nums-tabular mt-1.5 shrink-0 text-stone-400">
+                      <span className="text-eyebrow nums-tabular text-bone-faint mt-1.5 shrink-0">
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <div className="min-w-0">
                         <h3 className="text-h3 font-display">{point.title}</h3>
-                        <p className="text-small text-stone mt-2 max-w-[48ch]">
+                        <p className="text-small text-bone-dim mt-2 max-w-[48ch]">
                           {point.body}
                         </p>
                       </div>
@@ -128,7 +132,7 @@ export default function AboutPage() {
       </Section>
 
       {/* ---------------- Wellbeing + the honest credentials block ------------ */}
-      <Section surface="moss" spacing="loose" labelledBy="wellbeing-heading">
+      <Section surface="deep" spacing="loose" labelledBy="wellbeing-heading">
         <Container>
           <div className="gap-block grid lg:grid-cols-12 lg:gap-x-10">
             <div className="lg:col-span-7">
@@ -139,17 +143,17 @@ export default function AboutPage() {
                   size="display-2"
                   mark
                 >
-                  <span className="text-ivory">{about.wellbeing.heading}</span>
+                  <span>{about.wellbeing.heading}</span>
                 </SectionHeading>
                 <div className="mt-10 space-y-6">
                   {about.wellbeing.body.map((p) => (
-                    <p key={p} className="max-w-copy text-moss-200">
+                    <p key={p} className="max-w-copy text-bone-dim">
                       {p}
                     </p>
                   ))}
                 </div>
                 {/* Explicit non-claim. Kept visually quiet but always present. */}
-                <p className="text-micro text-moss-200/80 rule-t mt-10 max-w-[52ch] pt-5">
+                <p className="text-micro text-bone-dim/80 rule-t mt-10 max-w-[52ch] pt-5">
                   {about.wellbeing.disclaimer}
                 </p>
               </Reveal>
@@ -160,13 +164,13 @@ export default function AboutPage() {
                 {/* Same treatment as the programme details rail: the outline
                     heading is hidden, the visible label is not a heading. */}
                 <h3 className="sr-only">Training and credentials</h3>
-                <p aria-hidden="true" className="text-eyebrow text-moss-200 uppercase">
+                <p aria-hidden="true" className="text-eyebrow text-bone-dim uppercase">
                   Training &amp; credentials
                 </p>
                 {hasCredentials ? (
                   <ul className="mt-5 space-y-3">
                     {[...about.credentials, ...about.training].map((c) => (
-                      <li key={c} className="text-small rule-b text-ivory pb-3">
+                      <li key={c} className="text-small rule-b pb-3">
                         {c}
                       </li>
                     ))}
@@ -174,7 +178,7 @@ export default function AboutPage() {
                 ) : (
                   <div className="mt-5">
                     <Badge tone="placeholder">None supplied yet</Badge>
-                    <p className="text-micro text-moss-200/80 mt-4 max-w-[34ch]">
+                    <p className="text-micro text-bone-dim/80 mt-4 max-w-[34ch]">
                       No qualifications are listed because none have been provided.
                       Nothing will be shown here until it can be evidenced.
                     </p>
@@ -187,7 +191,7 @@ export default function AboutPage() {
       </Section>
 
       {/* ---------------- Close ---------------------------------------------- */}
-      <Section surface="alt" spacing="loose">
+      <Section surface="raised" spacing="loose">
         <Container>
           <div className="lg:w-8/12">
             <Reveal>
@@ -198,7 +202,9 @@ export default function AboutPage() {
               <h2 className="text-display-2 font-display optical-left max-w-[16ch] text-balance">
                 {about.cta.heading}
               </h2>
-              <p className="text-lead text-stone mt-7 max-w-[40ch]">{about.cta.lead}</p>
+              <p className="text-lead text-bone-dim mt-7 max-w-[40ch]">
+                {about.cta.lead}
+              </p>
               <div className="mt-11 flex flex-wrap items-center gap-4">
                 <Button
                   href="/contact"

@@ -50,7 +50,7 @@ export function PageHeader({
                 {heading}
               </h1>
               {lead ? (
-                <p className="text-lead text-stone mt-7 max-w-[44ch]">{lead}</p>
+                <p className="text-lead text-bone-dim mt-7 max-w-[44ch]">{lead}</p>
               ) : null}
               {children ? <div className="mt-10">{children}</div> : null}
             </Reveal>
@@ -62,10 +62,10 @@ export function PageHeader({
                 <dl className="rule-t pt-6">
                   {meta.map((item) => (
                     <div key={item.label} className="mb-5 last:mb-0">
-                      <dt className="text-eyebrow text-stone-400 uppercase">
+                      <dt className="text-eyebrow text-bone-faint uppercase">
                         {item.label}
                       </dt>
-                      <dd className="text-small text-charcoal mt-1.5">{item.value}</dd>
+                      <dd className="text-small text-bone mt-1.5">{item.value}</dd>
                     </div>
                   ))}
                 </dl>

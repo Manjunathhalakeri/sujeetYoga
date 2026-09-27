@@ -38,7 +38,7 @@ export function Feed() {
   const hasHandle = !home.feed.handle.startsWith('TODO');
 
   return (
-    <Section id="recent" surface="alt" spacing="default" labelledBy="feed-heading">
+    <Section id="recent" surface="raised" spacing="default" labelledBy="feed-heading">
       <Container>
         <div className="gap-block grid lg:grid-cols-12 lg:gap-x-10">
           <div className="lg:col-span-3">
@@ -53,12 +53,12 @@ export function Feed() {
               </SectionHeading>
               <p className="mt-6">
                 {hasHandle ? (
-                  <span className="text-small text-stone">{home.feed.handle}</span>
+                  <span className="text-small text-bone-dim">{home.feed.handle}</span>
                 ) : (
                   <Badge tone="placeholder">{home.feed.handle}</Badge>
                 )}
               </p>
-              <p className="text-micro mt-4 max-w-[30ch] text-stone-400">
+              <p className="text-micro text-bone-faint mt-4 max-w-[30ch]">
                 Placeholder images. Not connected to a live feed.
               </p>
             </Reveal>

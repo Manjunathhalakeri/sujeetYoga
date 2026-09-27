@@ -30,35 +30,72 @@ src/
 
 ## Colour
 
-Fifteen values. Tailwind's default palette is **deleted** at the token layer
+Dark, warm, pre-dawn. Tailwind's default palette is **deleted**
 (`--color-*: initial`), so `bg-blue-500` does not exist and cannot drift in.
 
-| Token | Hex | Use | Contrast on ivory |
+Every ratio below is computed, not estimated. Ratios are quoted against
+**`ink-lifted`, the lightest surface** — the worst case — so anything that
+passes here passes on every ground.
+
+### Surfaces
+
+| Token | Hex | Use |
+| --- | --- | --- |
+| `ink-deep` | `#0E0D0B` | Full-bleed bands, footer |
+| `ink` | `#14120F` | Default page ground |
+| `ink-raised` | `#1A1714` | Alternating sections |
+| `ink-lifted` | `#201C18` | Reading-heavy pages — About, programme detail |
+
+The ramp is deliberately **narrow**: adjacent surfaces sit ~1.05:1 apart and the
+whole span is 1.15:1. A change of ground reads as a shift in light, not as a
+panel dropped on the page. That is the difference between "pre-dawn" and
+"dashboard".
+
+### Text
+
+| Token | Hex | Worst-case ratio | Verdict |
 | --- | --- | --- | --- |
-| `ivory` | `#F6F3EE` | Page ground | — |
-| `ivory-100` | `#FBF9F6` | Raised surface | — |
-| `ivory-300` | `#EFEAE2` | Alternating section | — |
-| `sand` | `#E4DCD0` | Filled dividers | — |
-| `hairline` | `#D8D2C7` | 1px rules | — |
-| `stone-400` | `#9A948B` | Decorative only — **never body text** | 2.6:1 |
-| `stone` | `#6E6A63` | Secondary text | **4.86:1** AA |
-| `charcoal` | `#1B1A18` | Primary text | **15.5:1** AAA |
-| `moss` | `#3F5148` | Accent, links on light | **7.6:1** AAA |
-| `moss-900` | `#232E28` | Dark section ground | — |
-| `moss-200` | `#A9B5AC` | Secondary text on dark | **6.6:1** on moss-900 |
-| `clay` | `#9E5430` | Warm accent text | **5.0:1** AA |
-| `clay-400` | `#C08A64` | Decorative marks only | 2.9:1 |
-| `success` | `#35604A` | Success state | AA |
-| `danger` | `#9B3A2B` | Error state | AA |
+| `bone` | `#EDE7DD` | **13.76:1** | AAA — primary |
+| `bone-dim` | `#ABA296` | **6.72:1** | AA — secondary |
+| `bone-faint` | `#8B8379` | **4.53:1** | AA — tertiary and 12px labels |
 
-Every pair used for text meets WCAG AA. The two values that do not are labelled
-decorative-only in the token file.
+`bone-faint` was solved to clear 4.5:1 rather than left as decorative: it sets
+the 12px eyebrow labels, which are small text and get no large-text exemption.
 
-**Dark surfaces are a tone change, not a theme.** `<Section surface="moss">` adds
-an `.on-dark` class that re-points `--focus-ring` and `--rule`, so nested
-components adapt without an `isDark` prop threaded through the tree.
+### Accent and state
 
----
+| Token | Hex | Worst case | Verdict |
+| --- | --- | --- | --- |
+| `sage` | `#9DB3A4` | 7.59:1 | AAA — accent type, links |
+| `sage-deep` | `#5E7466` | 3.36:1 | Fills and marks — **not for text** |
+| `clay` | `#C98A5E` | 5.87:1 | AA — accent type |
+| `clay-deep` | `#905B39` | 3.02:1 | Fills and marks — **not for text** |
+| `success` | `#8FBFA1` | 8.17:1 | AAA |
+| `danger` | `#E08A72` | 6.49:1 | AA |
+
+### Rules — two values, two different obligations
+
+| Token | Hex | Ratio | Why |
+| --- | --- | --- | --- |
+| `hairline` | `#2E2A25` | 1.19:1 | **Decorative only.** WCAG 1.4.11 exempts purely decorative dividers, and keeping these near-invisible is what stops the page reading as a wireframe grid. |
+| `line-strong` | `#6C6760` | 3.02:1 | **Form control borders.** An input underline *is* a UI component and must clear 3:1. |
+
+Using `hairline` on an input would be a 1.19:1 boundary — a real failure that the
+old light palette hid, because a dark rule on ivory happened to pass.
+
+### Fills take dark text, never light
+
+`bone` on `sage` is 1.81:1 — a fail. Every accent fill therefore takes `ink`
+text, and the primary button is a **light fill with dark text** (`ink` on
+`bone`, 15.2:1), hovering to `sage` (8.4:1). That mirrors the old
+charcoal → moss hover rather than inventing a new gesture.
+
+### `.on-dark` is gone
+
+It existed to flip the focus ring and rule on the single dark band of a light
+page. With every surface dark it would be a no-op threaded through every
+`Section`, so it was removed rather than left as dead API. One focus ring
+(`bone`) serves every ground.
 
 ## Typography
 

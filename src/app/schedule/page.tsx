@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 const statusTone = {
-  scheduled: 'moss',
+  scheduled: 'sage',
   full: 'neutral',
   cancelled: 'clay',
   tbc: 'placeholder',
@@ -70,7 +70,7 @@ function SessionRow({ session }: { session: Session }) {
         {session.programmeSlug ? (
           <Link
             href={`/programs/${session.programmeSlug}`}
-            className="link-underline hover:text-moss tap-44 rounded-xs transition-colors"
+            className="link-underline hover:text-sage tap-44 rounded-xs transition-colors"
           >
             {session.programme}
           </Link>
@@ -78,11 +78,11 @@ function SessionRow({ session }: { session: Session }) {
           <span>{session.programme}</span>
         )}
         {session.note ? (
-          <p className="text-micro mt-1.5 max-w-[42ch] text-stone-400">{session.note}</p>
+          <p className="text-micro text-bone-faint mt-1.5 max-w-[42ch]">{session.note}</p>
         ) : null}
       </div>
 
-      <div className="text-small text-stone sm:col-span-2">
+      <div className="text-small text-bone-dim sm:col-span-2">
         {isTodo(session.audience) ? (
           <Badge tone="placeholder">{session.audience}</Badge>
         ) : (
@@ -128,7 +128,7 @@ export default function SchedulePage() {
                   <div className="lg:col-span-3">
                     <h3 className="text-h3 font-display lg:sticky lg:top-[calc(var(--header-h)+2rem)]">
                       {day.day}
-                      <span className="text-eyebrow mt-1 block text-stone-400 uppercase">
+                      <span className="text-eyebrow text-bone-faint mt-1 block uppercase">
                         {day.short}
                       </span>
                     </h3>
@@ -144,7 +144,7 @@ export default function SchedulePage() {
                     ) : (
                       // Explicit rather than hidden: a missing day would read as
                       // an oversight, a stated one reads as a rest day.
-                      <p className="text-small py-6 text-stone-400">
+                      <p className="text-small text-bone-faint py-6">
                         No scheduled sessions.
                       </p>
                     )}
@@ -158,10 +158,10 @@ export default function SchedulePage() {
               block is a stronger reset than yet another offset column. */}
           <Reveal className="mt-section">
             <div className="max-w-measure mx-auto text-center">
-              <h2 className="text-eyebrow text-stone-400 uppercase">Good to know</h2>
+              <h2 className="text-eyebrow text-bone-faint uppercase">Good to know</h2>
               <ul className="mt-6 space-y-3">
                 {scheduleNotes.map((note) => (
-                  <li key={note} className="text-small text-stone">
+                  <li key={note} className="text-small text-bone-dim">
                     {note}
                   </li>
                 ))}
@@ -171,14 +171,14 @@ export default function SchedulePage() {
         </Container>
       </Section>
 
-      <Section surface="alt" spacing="loose">
+      <Section surface="raised" spacing="loose">
         <Container>
           <Reveal>
             <div className="max-w-measure mx-auto text-center">
               <h2 className="text-display-2 font-display text-balance">
                 Want a place in a class?
               </h2>
-              <p className="text-lead text-stone mx-auto mt-6 max-w-[38ch]">
+              <p className="text-lead text-bone-dim mx-auto mt-6 max-w-[38ch]">
                 Placeholder. A line inviting an enquiry rather than implying online
                 booking exists.
               </p>

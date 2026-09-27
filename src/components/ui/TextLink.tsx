@@ -31,7 +31,7 @@ export function TextLink({
   const classes = cn(
     'rounded-xs transition-colors',
     variant === 'inline'
-      ? 'link-underline-retract text-charcoal hover:text-moss'
+      ? 'link-underline-retract text-bone hover:text-sage'
       : 'link-underline',
     className,
   );

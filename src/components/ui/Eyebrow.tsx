@@ -18,6 +18,8 @@ export function Eyebrow({
   children: ReactNode;
 }) {
   return (
-    <Tag className={cn('text-eyebrow text-stone uppercase', className)}>{children}</Tag>
+    <Tag className={cn('text-eyebrow text-bone-dim uppercase', className)}>
+      {children}
+    </Tag>
   );
 }

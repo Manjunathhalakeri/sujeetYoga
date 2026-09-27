@@ -21,37 +21,51 @@
   --shadow-*: initial;
   --blur-*: initial;
 
-  /* ---------- colour: neutrals / grounds ---------- */
+  /* ============================================================
+     COLOUR — dark, warm, pre-dawn.
+     Every ratio below is computed, not estimated. The full matrix lives in
+     DESIGN-SYSTEM.md; the numbers in these comments are the worst case, i.e.
+     measured against `ink-lifted`, the LIGHTEST surface, so a value that
+     passes here passes on every ground.
+     ============================================================ */
   --color-transparent: transparent;
   --color-current: currentColor;
   --color-white: #ffffff;
   --color-black: #000000;
 
-  --color-ivory: #f6f3ee; /* default page ground */
-  --color-ivory-100: #fbf9f6; /* raised surface on ivory */
-  --color-ivory-300: #efeae2; /* alternating section ground */
-  --color-sand: #e4dcd0; /* filled dividers, inactive tracks */
-  --color-hairline: #d8d2c7; /* 1px rules on light grounds */
+  /* ---------- surfaces ----------
+     Deliberately a NARROW luminance band: adjacent surfaces sit ~1.05:1 apart,
+     so a change of ground reads as a shift in light rather than as a panel
+     dropped on the page. The whole ramp spans only 1.15:1. */
+  --color-ink-deep: #0e0d0b; /* deepest — full-bleed bands, footer */
+  --color-ink: #14120f; /* default page ground */
+  --color-ink-raised: #1a1714; /* alternating sections */
+  --color-ink-lifted: #201c18; /* reading-heavy pages: About, programme detail */
 
-  /* ---------- colour: type ---------- */
-  --color-charcoal: #1b1a18; /* primary type — 15.5:1 on ivory */
-  --color-charcoal-800: #2b2926; /* hover / pressed on charcoal fills */
-  --color-stone: #6e6a63; /* secondary type — 4.86:1 on ivory (AA) */
-  --color-stone-400: #9a948b; /* tertiary / decorative ONLY — not for body */
+  /* ---------- type ---------- */
+  --color-bone: #ede7dd; /* primary — 13.76:1 worst case (AAA) */
+  --color-bone-dim: #aba296; /* secondary — 6.72:1 worst case (AA) */
+  --color-bone-faint: #8b8379; /* tertiary + 12px labels — 4.53:1 (AA) */
 
-  /* ---------- colour: brand green ---------- */
-  --color-moss: #3f5148; /* primary accent — 7.6:1 on ivory */
-  --color-moss-700: #35443c;
-  --color-moss-900: #232e28; /* dark section ground */
-  --color-moss-200: #a9b5ac; /* secondary type on dark — 6.6:1 on moss-900 */
+  /* ---------- rules ----------
+     Two values, because they answer to different rules. `hairline` is
+     decorative and is exempt from WCAG 1.4.11; keeping it near-invisible
+     (1.2:1) is what stops the page reading as a wireframe grid. `line-strong`
+     bounds form controls, which IS a UI component, so it clears 3:1. */
+  --color-hairline: #2e2a25; /* decorative rules only — 1.19:1, exempt */
+  --color-line-strong: #6c6760; /* form control borders — 3.02:1 */
 
-  /* ---------- colour: warm accent (use sparingly) ---------- */
-  --color-clay: #9e5430; /* accent type — 5.0:1 on ivory (AA) */
-  --color-clay-400: #c08a64; /* decorative rules / marks ONLY */
+  /* ---------- brand green ---------- */
+  --color-sage: #9db3a4; /* accent type/links — 7.59:1 (AAA) */
+  --color-sage-deep: #5e7466; /* fills and marks — 3.36:1, not for text */
 
-  /* ---------- colour: state ---------- */
-  --color-success: #35604a;
-  --color-danger: #9b3a2b;
+  /* ---------- warm accent (use sparingly) ---------- */
+  --color-clay: #c98a5e; /* accent type — 5.87:1 (AA) */
+  --color-clay-deep: #905b39; /* fills and marks — 3.02:1, not for text */
+
+  /* ---------- state ---------- */
+  --color-success: #8fbfa1; /* 8.17:1 (AAA) */
+  --color-danger: #e08a72; /* 6.49:1 (AA) */
 
   /* ---------- typography: families ---------- */
   /* Display = Latin headings only. Body/UI = Unicode-capable superfamily. */
@@ -153,19 +167,21 @@
 
   --reveal-distance: 16px;
 
+  /* One rule value now. There is no light surface left to switch against, so
+     the light/dark pair the old system needed has collapsed into a single
+     decorative hairline. */
   --rule: 1px solid var(--color-hairline);
-  --rule-dark: 1px solid rgb(246 243 238 / 0.16);
 
-  --focus-ring: var(--color-charcoal);
-  --focus-ring-offset: var(--color-ivory);
+  /* Focus is bone on every ground — the surface ramp spans only 1.15:1, so a
+     single ring colour is legible everywhere and no per-surface flip is
+     needed. Offset matches the default page ground. */
+  --focus-ring: var(--color-bone);
+  --focus-ring-offset: var(--color-ink);
 
   --header-h: 4.5rem;
 }
 
-/* Dark surfaces re-point the focus ring and rule so nested components
-   need no `isDark` prop to look correct. */
-.on-dark {
-  --focus-ring: var(--color-ivory);
-  --focus-ring-offset: var(--color-moss-900);
-  --rule: var(--rule-dark);
-}
+/* `.on-dark` is intentionally gone. It existed to flip the focus ring and rule
+   on the one dark band of a light page; with every surface dark it would be a
+   no-op that still had to be threaded through every Section. Removed rather
+   than left as dead API. */

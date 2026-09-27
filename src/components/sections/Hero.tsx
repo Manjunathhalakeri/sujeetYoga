@@ -99,7 +99,7 @@ export function Hero() {
               delay: reduced ? 0 : 0.5,
             }}
           >
-            <p className="text-lead text-stone mt-8 max-w-[38ch]">{hero.lead}</p>
+            <p className="text-lead text-bone-dim mt-8 max-w-[38ch]">{hero.lead}</p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button
@@ -118,8 +118,8 @@ export function Hero() {
             <dl className="rule-t mt-14 grid grid-cols-2 gap-x-8 gap-y-5 pt-6 sm:grid-cols-3">
               {hero.rail.map((item) => (
                 <div key={item.label}>
-                  <dt className="text-eyebrow text-stone-400 uppercase">{item.label}</dt>
-                  <dd className="text-small text-charcoal mt-1.5">{item.value}</dd>
+                  <dt className="text-eyebrow text-bone-faint uppercase">{item.label}</dt>
+                  <dd className="text-small text-bone mt-1.5">{item.value}</dd>
                 </div>
               ))}
             </dl>

@@ -91,10 +91,10 @@ export function Figure({
       </div>
 
       {caption || credit ? (
-        <figcaption className="text-micro text-stone mt-3">
+        <figcaption className="text-micro text-bone-dim mt-3">
           {caption}
           {credit ? (
-            <span className="text-stone-400">
+            <span className="text-bone-faint">
               {caption ? ' · ' : null}
               {credit}
             </span>

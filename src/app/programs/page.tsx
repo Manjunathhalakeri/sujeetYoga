@@ -78,7 +78,7 @@ export default function ProgramsIndexPage() {
                         : 'lg:order-1 lg:col-span-6'
                     }
                   >
-                    <span className="text-eyebrow nums-tabular block text-stone-400">
+                    <span className="text-eyebrow nums-tabular text-bone-faint block">
                       {program.index}
                     </span>
                     {/* A real <h2>, not a styled span. This is the index page
@@ -88,17 +88,17 @@ export default function ProgramsIndexPage() {
                         closing CTA, and the page has no structure. A heading
                         inside an anchor is valid flow content in HTML5. */}
                     <span className="mt-3 flex items-start justify-between gap-4">
-                      <h2 className="text-display-2 font-display group-hover:text-moss transition-colors">
+                      <h2 className="text-display-2 font-display group-hover:text-sage transition-colors">
                         {program.title}
                       </h2>
                       <ArrowUpRight
                         size={22}
                         strokeWidth={1.5}
                         aria-hidden="true"
-                        className="group-hover:text-moss mt-2 shrink-0 text-stone-400 transition-[color,translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        className="group-hover:text-sage text-bone-faint mt-2 shrink-0 transition-[color,translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                       />
                     </span>
-                    <span className="text-lead text-stone mt-5 block max-w-[46ch]">
+                    <span className="text-lead text-bone-dim mt-5 block max-w-[46ch]">
                       {program.summary}
                     </span>
                     <span className="mt-6 flex flex-wrap items-center gap-2">
@@ -119,7 +119,7 @@ export default function ProgramsIndexPage() {
         </Container>
       </Section>
 
-      <Section surface="alt" spacing="loose">
+      <Section surface="raised" spacing="loose">
         <Container>
           <Reveal className="lg:w-8/12">
             {/* display-2, not display-1. On interior pages the page title is
@@ -129,7 +129,7 @@ export default function ProgramsIndexPage() {
             <h2 className="text-display-2 font-display optical-left max-w-[17ch] text-balance">
               Not sure which one fits?
             </h2>
-            <p className="text-lead text-stone mt-7 max-w-[40ch]">
+            <p className="text-lead text-bone-dim mt-7 max-w-[40ch]">
               Placeholder. A line inviting a conversation rather than a booking.
             </p>
             <div className="mt-11">

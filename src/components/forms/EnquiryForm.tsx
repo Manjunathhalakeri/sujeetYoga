@@ -110,7 +110,7 @@ export function EnquiryForm({
         <p className="text-display-2 font-display max-w-[18ch] text-balance">
           Thank you — your enquiry has been sent.
         </p>
-        <p className="text-lead text-stone mt-6 max-w-[42ch]">
+        <p className="text-lead text-bone-dim mt-6 max-w-[42ch]">
           Placeholder confirmation copy. TODO: confirm the wording and the expected reply
           time.
         </p>
@@ -210,7 +210,7 @@ export function EnquiryForm({
         >
           Send enquiry
         </Button>
-        <p className="text-micro text-stone-400 sm:max-w-[28ch]">
+        <p className="text-micro text-bone-faint sm:max-w-[28ch]">
           We use your details only to reply to this enquiry.
         </p>
       </div>

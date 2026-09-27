@@ -6,7 +6,7 @@ import { extendTailwindMerge } from 'tailwind-merge';
  *
  * tailwind-merge resolves conflicts by class *group*. Out of the box it only
  * knows Tailwind's stock scales, so with our custom tokens it cannot tell a
- * font size from a text colour — it saw `text-body text-charcoal` as two
+ * font size from a text colour — it saw `text-body text-bone` as two
  * font sizes and silently dropped the size. Every button on the site rendered
  * without its type scale as a result.
  *
@@ -32,21 +32,19 @@ const FONT_SIZES = [
 ] as const;
 
 const COLORS = [
-  'ivory',
-  'ivory-100',
-  'ivory-300',
-  'sand',
+  'ink',
+  'ink-deep',
+  'ink-raised',
+  'ink-lifted',
+  'bone',
+  'bone-dim',
+  'bone-faint',
   'hairline',
-  'stone',
-  'stone-400',
-  'charcoal',
-  'charcoal-800',
-  'moss',
-  'moss-200',
-  'moss-700',
-  'moss-900',
+  'line-strong',
+  'sage',
+  'sage-deep',
   'clay',
-  'clay-400',
+  'clay-deep',
   'success',
   'danger',
 ] as const;

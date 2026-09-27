@@ -67,7 +67,7 @@ function WorkshopEntry({ workshop }: { workshop: Workshop }) {
 
       <div className="lg:col-span-5">
         <div className="flex flex-wrap items-center gap-2">
-          <Badge tone={workshop.status === 'open' ? 'moss' : 'placeholder'}>
+          <Badge tone={workshop.status === 'open' ? 'sage' : 'placeholder'}>
             {STATUS_LABEL[workshop.status]}
           </Badge>
           {workshop.isPlaceholder ? <Badge tone="placeholder">Placeholder</Badge> : null}
@@ -77,10 +77,10 @@ function WorkshopEntry({ workshop }: { workshop: Workshop }) {
           {workshop.title}
         </h3>
 
-        <p className="text-lead text-stone mt-5 max-w-[46ch]">{workshop.summary}</p>
+        <p className="text-lead text-bone-dim mt-5 max-w-[46ch]">{workshop.summary}</p>
 
         {workshop.body?.map((p) => (
-          <p key={p} className="text-stone max-w-copy mt-4">
+          <p key={p} className="text-bone-dim max-w-copy mt-4">
             {p}
           </p>
         ))}
@@ -97,8 +97,8 @@ function WorkshopEntry({ workshop }: { workshop: Workshop }) {
         <dl className="rule-t pt-6">
           {detail.map((d) => (
             <div key={d.label} className="mb-5 last:mb-0">
-              <dt className="text-eyebrow text-stone-400 uppercase">{d.label}</dt>
-              <dd className="text-small text-charcoal mt-1.5">
+              <dt className="text-eyebrow text-bone-faint uppercase">{d.label}</dt>
+              <dd className="text-small text-bone mt-1.5">
                 {isTodo(d.value) ? <Badge tone="placeholder">{d.value}</Badge> : d.value}
               </dd>
             </div>
@@ -136,7 +136,7 @@ export default function WorkshopsPage() {
               <Reveal>
                 <div className="space-y-6">
                   {workshopsIntro.body.map((p) => (
-                    <p key={p} className="max-w-copy text-stone">
+                    <p key={p} className="max-w-copy text-bone-dim">
                       {p}
                     </p>
                   ))}
@@ -148,7 +148,7 @@ export default function WorkshopsPage() {
       </Section>
 
       {/* ---------------- Upcoming -------------------------------------------- */}
-      <Section surface="alt" spacing="loose" labelledBy="upcoming-heading">
+      <Section surface="raised" spacing="loose" labelledBy="upcoming-heading">
         <Container>
           <Reveal>
             <SectionHeading
@@ -172,7 +172,7 @@ export default function WorkshopsPage() {
           ) : (
             <Reveal className="mt-12">
               <div className="rule-t max-w-measure pt-10">
-                <p className="text-lead text-stone">{workshopsIntro.emptyState}</p>
+                <p className="text-lead text-bone-dim">{workshopsIntro.emptyState}</p>
               </div>
             </Reveal>
           )}
@@ -193,7 +193,7 @@ export default function WorkshopsPage() {
                 <RevealItem as="li" key={workshop.slug} className="rule-b py-6">
                   <div className="flex flex-wrap items-baseline justify-between gap-4">
                     <h3 className="text-h3 font-display">{workshop.title}</h3>
-                    <span className="text-small text-stone nums-tabular">
+                    <span className="text-small text-bone-dim nums-tabular">
                       {workshop.date}
                     </span>
                   </div>
@@ -205,19 +205,19 @@ export default function WorkshopsPage() {
       ) : null}
 
       {/* ---------------- CTA — centred, as a deliberate reset ---------------- */}
-      <Section surface="moss" spacing="loose">
+      <Section surface="deep" spacing="loose">
         <Container>
           <Reveal>
             <div className="max-w-measure mx-auto text-center">
-              <h2 className="text-display-2 font-display text-ivory text-balance">
+              <h2 className="text-display-2 font-display text-balance">
                 Want to hear about the next one?
               </h2>
-              <p className="text-lead text-moss-200 mx-auto mt-6 max-w-[38ch]">
+              <p className="text-lead text-bone-dim mx-auto mt-6 max-w-[38ch]">
                 Placeholder. A line about how people are told when a workshop is
                 announced.
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Button href="/contact" tone="dark" size="lg">
+                <Button href="/contact" size="lg">
                   {siteConfig.cta.primaryLabel}
                 </Button>
               </div>

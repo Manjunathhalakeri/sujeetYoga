@@ -58,24 +58,24 @@ export function Programs() {
                     href={`/programs/${program.slug}`}
                     className="group relative flex items-start gap-5 py-7 transition-colors sm:gap-8"
                   >
-                    <span className="text-eyebrow nums-tabular mt-2 shrink-0 text-stone-400">
+                    <span className="text-eyebrow nums-tabular text-bone-faint mt-2 shrink-0">
                       {program.index}
                     </span>
 
                     <span className="min-w-0 flex-1">
                       <span className="flex items-start justify-between gap-4">
-                        <span className="text-h3 font-display group-hover:text-moss transition-colors">
+                        <span className="text-h3 font-display group-hover:text-sage transition-colors">
                           {program.title}
                         </span>
                         <ArrowUpRight
                           size={18}
                           strokeWidth={1.5}
                           aria-hidden="true"
-                          className="group-hover:text-moss mt-1.5 shrink-0 text-stone-400 transition-[color,translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          className="group-hover:text-sage text-bone-faint mt-1.5 shrink-0 transition-[color,translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                         />
                       </span>
 
-                      <span className="text-small text-stone mt-2 block max-w-[46ch]">
+                      <span className="text-small text-bone-dim mt-2 block max-w-[46ch]">
                         {program.summary}
                       </span>
 

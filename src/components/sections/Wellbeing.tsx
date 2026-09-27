@@ -24,7 +24,7 @@ export function Wellbeing() {
     <>
       {/* Full-bleed band. Fixed viewport-relative height so it reads as a
           horizon line between two sections rather than as a hero. */}
-      <div className="bg-ivory-300 relative h-[38vh] min-h-56 w-full overflow-hidden md:h-[52vh]">
+      <div className="bg-ink-raised relative h-[38vh] min-h-56 w-full overflow-hidden md:h-[52vh]">
         <Image
           src={images.landscape.src}
           alt={images.landscape.alt}
@@ -36,7 +36,7 @@ export function Wellbeing() {
 
       <Section
         id="wellbeing"
-        surface="moss"
+        surface="deep"
         spacing="loose"
         labelledBy="wellbeing-heading"
       >
@@ -50,9 +50,9 @@ export function Wellbeing() {
                   size="display-2"
                   mark
                 >
-                  <span className="text-ivory">{wellbeing.heading}</span>
+                  <span>{wellbeing.heading}</span>
                 </SectionHeading>
-                <p className="text-lead text-moss-200 mt-6 max-w-[34ch]">
+                <p className="text-lead text-bone-dim mt-6 max-w-[34ch]">
                   {wellbeing.lead}
                 </p>
               </Reveal>
@@ -63,14 +63,12 @@ export function Wellbeing() {
                 {wellbeing.pillars.map((pillar, i) => (
                   <RevealItem as="li" key={pillar.title} className="rule-b py-7">
                     <div className="flex items-start gap-5 sm:gap-8">
-                      <span className="text-eyebrow nums-tabular text-moss-200/70 mt-1.5 shrink-0">
+                      <span className="text-eyebrow nums-tabular text-bone-dim/70 mt-1.5 shrink-0">
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <div className="min-w-0">
-                        <h3 className="text-h3 font-display text-ivory">
-                          {pillar.title}
-                        </h3>
-                        <p className="text-small text-moss-200 mt-2 max-w-[48ch]">
+                        <h3 className="text-h3 font-display">{pillar.title}</h3>
+                        <p className="text-small text-bone-dim mt-2 max-w-[48ch]">
                           {pillar.body}
                         </p>
                       </div>

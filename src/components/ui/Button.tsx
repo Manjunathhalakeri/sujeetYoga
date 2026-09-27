@@ -15,7 +15,6 @@ import { cn } from '@/lib/cn';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'quiet';
 export type ButtonSize = 'sm' | 'md' | 'lg';
-export type ButtonTone = 'light' | 'dark';
 
 const base = cn(
   'relative inline-flex items-center justify-center gap-2.5 text-center align-middle',
@@ -40,27 +39,26 @@ const sizes: Record<ButtonSize, string> = {
   lg: 'min-h-14 px-8 text-body',
 };
 
-const variants: Record<ButtonVariant, Record<ButtonTone, string>> = {
-  primary: {
-    light: 'bg-charcoal text-ivory hover:bg-moss-900',
-    dark: 'bg-ivory text-charcoal hover:bg-ivory-300',
-  },
-  secondary: {
-    light:
-      'border border-charcoal/25 text-charcoal hover:border-charcoal hover:bg-charcoal/[0.04]',
-    dark: 'border border-ivory/30 text-ivory hover:border-ivory hover:bg-ivory/10',
-  },
-  quiet: {
-    // The underline sits on the label span so it hugs the text, not the padding box.
-    light: 'px-0 text-charcoal hover:text-moss',
-    dark: 'px-0 text-ivory hover:text-moss-200',
-  },
+/**
+ * One set, no `tone`. The prop used to answer "am I sitting on a light or a
+ * dark surface"; every surface is dark now, so it had one real value and one
+ * that rendered ink-on-ink.
+ *
+ * Primary is a light fill with dark text — the inverse of the old light theme.
+ * `ink` on `bone` is 15.2:1, and the hover shifts the fill to `sage`, keeping
+ * ink text at 8.4:1 while carrying a little brand colour. That mirrors the old
+ * charcoal -> moss hover rather than inventing a new gesture.
+ */
+const variants: Record<ButtonVariant, string> = {
+  primary: 'bg-bone text-ink hover:bg-sage',
+  secondary: 'border border-bone/25 text-bone hover:border-bone/60 hover:bg-bone/[0.06]',
+  // The underline sits on the label span so it hugs the text, not the padding box.
+  quiet: 'px-0 text-bone hover:text-sage',
 };
 
 interface CommonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
-  tone?: ButtonTone;
   /** Stretch to the parent width — the default for mobile form actions. */
   block?: boolean;
   /** Trailing icon, e.g. an arrow. Rendered aria-hidden. */
@@ -86,17 +84,11 @@ type LinkButtonProps = CommonProps &
 
 export type ButtonProps = NativeButtonProps | LinkButtonProps;
 
-function classes({
-  variant = 'primary',
-  size = 'md',
-  tone = 'light',
-  block,
-  className,
-}: CommonProps) {
+function classes({ variant = 'primary', size = 'md', block, className }: CommonProps) {
   return cn(
     base,
     sizes[size],
-    variants[variant][tone],
+    variants[variant],
     variant === 'quiet' && 'min-h-11',
     block ? 'w-full' : 'w-auto',
     className,
@@ -107,7 +99,6 @@ export function Button(props: ButtonProps) {
   const {
     variant = 'primary',
     size = 'md',
-    tone = 'light',
     block,
     icon,
     className,
@@ -115,7 +106,7 @@ export function Button(props: ButtonProps) {
     ...rest
   } = props;
 
-  const shared: CommonProps = { variant, size, tone, block, className, children };
+  const shared: CommonProps = { variant, size, block, className, children };
 
   const label = (
     <>

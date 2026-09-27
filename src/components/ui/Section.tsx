@@ -5,16 +5,27 @@ import { cn } from '@/lib/cn';
  * Vertical rhythm + surface tone in one place.
  *
  * Alternating `surface` is how the page gets its structure — a shift in ground
- * tone and a hairline rule, rather than cards with shadows. The `.on-dark`
- * class on dark surfaces re-points the focus-ring and rule custom properties,
- * so nested components adapt without needing an `isDark` prop threaded down.
+ * tone and a hairline rule, rather than cards with shadows.
+ *
+ * All four surfaces are dark and sit within a 1.15:1 luminance band, so moving
+ * between them reads as a change in light rather than as a panel. Text colour
+ * is therefore the same on all of them and no component needs an `isDark` prop.
+ *
+ * Names describe the light level, not a hue, so the scale still makes sense if
+ * the palette is retuned later.
  */
-export type SectionSurface = 'ivory' | 'alt' | 'moss' | 'none';
+export type SectionSurface = 'ink' | 'raised' | 'lifted' | 'deep' | 'none';
 
 const surfaces: Record<SectionSurface, string> = {
-  ivory: 'bg-ivory text-charcoal',
-  alt: 'bg-ivory-300 text-charcoal',
-  moss: 'on-dark bg-moss-900 text-ivory',
+  /** Default page ground. */
+  ink: 'bg-ink text-bone',
+  /** Alternating band — the workhorse for breaking up a long page. */
+  raised: 'bg-ink-raised text-bone',
+  /** Reading-heavy sections: long prose on About and programme detail pages.
+   *  The lightest ground, which lifts body copy off the page slightly. */
+  lifted: 'bg-ink-lifted text-bone',
+  /** Deepest ground — full-bleed bands and the footer. */
+  deep: 'bg-ink-deep text-bone',
   none: '',
 };
 
@@ -48,7 +59,7 @@ export interface SectionProps {
 export function Section({
   as: Tag = 'section',
   id,
-  surface = 'ivory',
+  surface = 'ink',
   spacing = 'default',
   ruled = false,
   labelledBy,

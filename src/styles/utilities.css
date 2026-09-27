@@ -36,8 +36,11 @@
 @utility img-frame {
   position: relative;
   overflow: hidden;
-  background-color: var(--color-ivory-300);
-  box-shadow: inset 0 0 0 1px rgb(27 26 24 / 0.06);
+  background-color: var(--color-ink-raised);
+  /* A light inset ring, not a dark one. On an ivory page this kept high-key
+     photography from bleeding into the ground; on ink the risk inverts, so the
+     ring lifts the edge of a dark image away from a dark surface instead. */
+  box-shadow: inset 0 0 0 1px rgb(237 231 221 / 0.08);
 }
 
 /* Underline that grows from the left on hover. Tier 1 (pure CSS). */

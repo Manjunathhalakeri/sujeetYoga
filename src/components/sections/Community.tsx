@@ -38,7 +38,7 @@ export function Community() {
               >
                 {home.community.heading}
               </SectionHeading>
-              <p className="text-micro text-stone mt-6">{home.community.note}</p>
+              <p className="text-micro text-bone-dim mt-6">{home.community.note}</p>
             </Reveal>
           </div>
 
@@ -47,17 +47,17 @@ export function Community() {
               <figure className="rule-b pb-10">
                 <blockquote>
                   <p className="text-display-2 font-display text-balance">
-                    <span aria-hidden="true" className="text-clay-400">
+                    <span aria-hidden="true" className="text-clay-deep">
                       “
                     </span>
                     {featured.quote}
-                    <span aria-hidden="true" className="text-clay-400">
+                    <span aria-hidden="true" className="text-clay-deep">
                       ”
                     </span>
                   </p>
                 </blockquote>
                 <figcaption className="mt-7 flex flex-wrap items-center gap-3">
-                  <span className="text-small text-stone">{featured.attribution}</span>
+                  <span className="text-small text-bone-dim">{featured.attribution}</span>
                   {featured.isPlaceholder ? (
                     <Badge tone="placeholder">Placeholder</Badge>
                   ) : null}
@@ -75,7 +75,7 @@ export function Community() {
                         <p className="text-h3 font-display text-balance">{t.quote}</p>
                       </blockquote>
                       <figcaption className="mt-5 flex flex-wrap items-center gap-3">
-                        <span className="text-micro text-stone">{t.attribution}</span>
+                        <span className="text-micro text-bone-dim">{t.attribution}</span>
                         {t.isPlaceholder ? (
                           <Badge tone="placeholder">Placeholder</Badge>
                         ) : null}

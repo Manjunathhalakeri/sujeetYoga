@@ -66,7 +66,7 @@ export function Header() {
         // ghost through the bar as they scrolled under it, which read as a
         // rendering fault rather than as a material.
         scrolled && !open
-          ? 'rule-b bg-ivory'
+          ? 'rule-b bg-ink'
           : 'border-b border-transparent bg-transparent',
       )}
     >
@@ -77,7 +77,7 @@ export function Header() {
           aria-label={`${siteConfig.name} — home`}
         >
           {siteConfig.wordmark.lead}
-          <span className="text-stone"> {siteConfig.wordmark.trail}</span>
+          <span className="text-bone-dim"> {siteConfig.wordmark.trail}</span>
         </Link>
 
         {/* Desktop navigation */}
@@ -91,7 +91,7 @@ export function Header() {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'link-underline text-small rounded-xs py-2 transition-colors',
-                  active ? 'text-charcoal' : 'text-stone hover:text-charcoal',
+                  active ? 'text-bone' : 'text-bone-dim hover:text-bone',
                 )}
               >
                 {item.label}
@@ -122,7 +122,7 @@ export function Header() {
         {open ? (
           <motion.div
             id="mobile-menu"
-            className="bg-ivory fixed inset-0 top-0 z-50 flex flex-col lg:hidden"
+            className="bg-ink fixed inset-0 top-0 z-50 flex flex-col lg:hidden"
             initial={reduced ? { opacity: 0 } : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: -12 }}
@@ -131,7 +131,7 @@ export function Header() {
             <Container className="flex h-[var(--header-h)] shrink-0 items-center justify-between">
               <span className="text-h4 font-display">
                 {siteConfig.wordmark.lead}
-                <span className="text-stone"> {siteConfig.wordmark.trail}</span>
+                <span className="text-bone-dim"> {siteConfig.wordmark.trail}</span>
               </span>
               <button
                 type="button"

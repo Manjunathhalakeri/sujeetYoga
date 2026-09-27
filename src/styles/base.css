@@ -17,8 +17,8 @@
 
   body {
     margin: 0;
-    background-color: var(--color-ivory);
-    color: var(--color-charcoal);
+    background-color: var(--color-ink);
+    color: var(--color-bone);
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: 1.65;
@@ -91,7 +91,7 @@
 
   /* ---------- focus ----------
      Pointer users never see a ring; keyboard users always do.
-     The ring colour flips automatically inside `.on-dark`. */
+     One ring colour serves every surface — see tokens.css. */
   :focus {
     outline: none;
   }
@@ -103,8 +103,8 @@
   }
 
   ::selection {
-    background-color: var(--color-moss);
-    color: var(--color-ivory);
+    background-color: var(--color-sage);
+    color: var(--color-ink);
   }
 
   /* Hide the native number spinners and search decorations that break

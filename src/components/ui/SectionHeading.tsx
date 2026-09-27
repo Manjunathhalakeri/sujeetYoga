@@ -88,7 +88,7 @@ export function SectionHeading({
       {lead ? (
         <p
           className={cn(
-            'text-lead max-w-measure text-stone mt-6',
+            'text-lead max-w-measure text-bone-dim mt-6',
             align === 'center' && 'mx-auto',
           )}
         >

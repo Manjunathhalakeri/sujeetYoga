@@ -7,13 +7,14 @@ import { cn } from '@/lib/cn';
  * The only component in the system allowed a full radius, because at this size
  * a pill reads as a label rather than as a card.
  */
-export type BadgeTone = 'neutral' | 'moss' | 'clay' | 'placeholder' | 'dark';
+export type BadgeTone = 'neutral' | 'sage' | 'clay' | 'placeholder';
 
 const tones: Record<BadgeTone, string> = {
-  neutral: 'border-hairline text-stone',
-  moss: 'border-moss/30 text-moss',
-  clay: 'border-clay/30 text-clay',
-  dark: 'border-ivory/25 text-moss-200',
+  // Borders use line-strong, not the decorative hairline: a badge outline is a
+  // component boundary and has to clear 3:1.
+  neutral: 'border-line-strong text-bone-dim',
+  sage: 'border-sage/40 text-sage',
+  clay: 'border-clay/40 text-clay',
   // Deliberately conspicuous: marks content that is not real yet.
   placeholder: 'border-dashed border-clay/60 text-clay',
 };

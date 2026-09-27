@@ -23,17 +23,19 @@ import { cn } from '@/lib/cn';
 
 const control = cn(
   'w-full rounded-none border-0 border-b bg-transparent',
-  'px-0 py-3 text-body text-charcoal',
-  'border-hairline transition-colors',
-  'placeholder:text-stone-400',
-  'hover:border-stone',
+  'px-0 py-3 text-body text-bone',
+  // line-strong, not hairline: an input underline is a UI component boundary
+  // and must clear WCAG 1.4.11's 3:1. The decorative hairline is 1.19:1.
+  'border-line-strong transition-colors',
+  'placeholder:text-bone-faint',
+  'hover:border-bone-dim',
   // The underline thickens and darkens on focus; the focus ring is suppressed
   // here because the border change is a clearer, less boxy indicator — but a
   // 2px colour shift alone would fail WCAG, so we also keep the outline for
   // keyboard users via :focus-visible.
-  'focus:border-charcoal focus:outline-none',
-  'focus-visible:border-charcoal',
-  'disabled:cursor-not-allowed disabled:border-dashed disabled:text-stone-400',
+  'focus:border-bone focus:outline-none',
+  'focus-visible:border-bone',
+  'disabled:cursor-not-allowed disabled:border-dashed disabled:text-bone-faint',
   'aria-[invalid=true]:border-danger',
 );
 
@@ -77,7 +79,7 @@ export function FieldShell({
       <label
         htmlFor={id}
         className={cn(
-          'text-micro text-stone mb-1 tracking-[0.08em] uppercase',
+          'text-micro text-bone-dim mb-1 tracking-[0.08em] uppercase',
           hideLabel && 'sr-only',
         )}
       >
@@ -87,7 +89,7 @@ export function FieldShell({
             {' *'}
           </span>
         ) : (
-          <span className="tracking-normal text-stone-400 normal-case"> (optional)</span>
+          <span className="text-bone-faint tracking-normal normal-case"> (optional)</span>
         )}
       </label>
 
@@ -99,7 +101,7 @@ export function FieldShell({
       })}
 
       {hint ? (
-        <p id={hintId} className="text-micro text-stone mt-2">
+        <p id={hintId} className="text-micro text-bone-dim mt-2">
           {hint}
         </p>
       ) : null}

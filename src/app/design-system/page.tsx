@@ -90,13 +90,13 @@ export default function DesignSystemPage() {
           <div className="mt-10 flex flex-wrap gap-2">
             <Badge tone="placeholder">All content is placeholder</Badge>
             <Badge tone="neutral">Fraunces + Anek Latin</Badge>
-            <Badge tone="moss">Tailwind v4 tokens</Badge>
+            <Badge tone="sage">Tailwind v4 tokens</Badge>
           </div>
         </Container>
       </Section>
 
       {/* ---------------------------------------------------------------- */}
-      <Section id="colour" surface="alt" labelledBy="colour-h">
+      <Section id="colour" surface="raised" labelledBy="colour-h">
         <Container>
           <SectionHeading
             id="colour-h"
@@ -115,10 +115,10 @@ export default function DesignSystemPage() {
                   aria-hidden="true"
                 />
                 <p className="text-small mt-3 font-medium">{c.name}</p>
-                <p className="text-micro nums-tabular text-stone-400 uppercase">
+                <p className="text-micro nums-tabular text-bone-faint uppercase">
                   {c.hex}
                 </p>
-                <p className="text-micro text-stone">{c.note}</p>
+                <p className="text-micro text-bone-dim">{c.note}</p>
               </li>
             ))}
           </ul>
@@ -144,7 +144,7 @@ export default function DesignSystemPage() {
             ))}
 
             <Spec label="lead — 17 → 21px · 1.55">
-              <p className="text-lead max-w-measure text-stone">
+              <p className="text-lead max-w-measure text-bone-dim">
                 Lead paragraphs sit under a heading and carry the section&rsquo;s idea in
                 one or two sentences. They are set in stone rather than charcoal so the
                 heading keeps the hierarchy.
@@ -168,14 +168,14 @@ export default function DesignSystemPage() {
               <p className="text-small">
                 Small — 15px, used for metadata and dense rows.
               </p>
-              <p className="text-micro text-stone mt-2">
+              <p className="text-micro text-bone-dim mt-2">
                 Micro — 13px, for captions, credits and legal text.
               </p>
               <Eyebrow className="mt-4">Eyebrow — 12px, 0.18em tracking</Eyebrow>
               <p className="nums-tabular text-h3 font-display mt-4">
                 06:30 · 07:45 · 18:00
               </p>
-              <p className="text-micro text-stone mt-1">
+              <p className="text-micro text-bone-dim mt-1">
                 Tabular numerals, so schedule columns align.
               </p>
             </Spec>
@@ -184,7 +184,7 @@ export default function DesignSystemPage() {
       </Section>
 
       {/* ---------------------------------------------------------------- */}
-      <Section id="layout" surface="alt" labelledBy="layout-h">
+      <Section id="layout" surface="raised" labelledBy="layout-h">
         <Container>
           <SectionHeading
             id="layout-h"
@@ -202,9 +202,11 @@ export default function DesignSystemPage() {
               { name: 'bleed', w: 'max-w-bleed', note: '96rem · wide imagery' },
             ].map((c) => (
               <div key={c.name}>
-                <div className={`${c.w} rule-t rule-b rule-l rule-r bg-sand/40 h-9`} />
-                <p className="text-micro text-stone mt-2">
-                  <span className="text-charcoal">{c.name}</span> — {c.note}
+                <div
+                  className={`${c.w} rule-t rule-b rule-l rule-r bg-hairline/40 h-9`}
+                />
+                <p className="text-micro text-bone-dim mt-2">
+                  <span className="text-bone">{c.name}</span> — {c.note}
                 </p>
               </div>
             ))}
@@ -226,8 +228,8 @@ export default function DesignSystemPage() {
             ].map(([token, value, note]) => (
               <div key={token} className="rule-t pt-4">
                 <p className="text-small font-medium">{token}</p>
-                <p className="text-micro nums-tabular text-stone mt-1">{value}</p>
-                <p className="text-micro mt-1 text-stone-400">{note}</p>
+                <p className="text-micro nums-tabular text-bone-dim mt-1">{value}</p>
+                <p className="text-micro text-bone-faint mt-1">{note}</p>
               </div>
             ))}
           </div>
@@ -278,7 +280,7 @@ export default function DesignSystemPage() {
                   Send enquiry
                 </Button>
               </div>
-              <p className="text-micro max-w-copy text-stone mt-4">
+              <p className="text-micro max-w-copy text-bone-dim mt-4">
                 Loading is communicated with text rather than a spinner, so it survives
                 <code className="mx-1">prefers-reduced-motion</code> and is announced by
                 screen readers via <code>aria-busy</code>.
@@ -292,7 +294,7 @@ export default function DesignSystemPage() {
                   Inline link
                 </TextLink>
                 <Badge tone="neutral">Beginner</Badge>
-                <Badge tone="moss">60 min</Badge>
+                <Badge tone="sage">60 min</Badge>
                 <Badge tone="clay">Ages 6–12</Badge>
                 <Badge tone="placeholder">Placeholder</Badge>
               </div>
@@ -302,33 +304,27 @@ export default function DesignSystemPage() {
       </Section>
 
       {/* ---------------------------------------------------------------- */}
-      <Section id="dark" surface="moss" labelledBy="dark-h">
+      <Section id="dark" surface="deep" labelledBy="dark-h">
         <Container>
           <SectionHeading
             id="dark-h"
             eyebrow="05"
             lead="Dark sections are a tone change, not a theme. The .on-dark class re-points the focus-ring and rule custom properties, so nested components adapt without an isDark prop threaded through the tree."
           >
-            <span className="text-ivory">Dark surface</span>
+            <span>Dark surface</span>
           </SectionHeading>
 
           <div className="mt-12 flex flex-wrap items-center gap-4">
-            <Button tone="dark">Book a session</Button>
-            <Button tone="dark" variant="secondary">
-              See the schedule
-            </Button>
-            <Button
-              tone="dark"
-              variant="quiet"
-              icon={<ArrowRight size={16} strokeWidth={1.75} />}
-            >
+            <Button>Book a session</Button>
+            <Button variant="secondary">See the schedule</Button>
+            <Button variant="quiet" icon={<ArrowRight size={16} strokeWidth={1.75} />}>
               Read more
             </Button>
-            <Badge tone="dark">On dark</Badge>
+            <Badge tone="neutral">Neutral</Badge>
           </div>
 
           <Rule className="mt-12" />
-          <p className="text-small max-w-copy text-moss-200 mt-6">
+          <p className="text-small max-w-copy text-bone-dim mt-6">
             Secondary text on this ground uses moss-200 at 6.6:1. The hairline above uses
             the dark rule variant automatically.
           </p>
@@ -336,7 +332,7 @@ export default function DesignSystemPage() {
       </Section>
 
       {/* ---------------------------------------------------------------- */}
-      <Section id="media" surface="alt" labelledBy="media-h">
+      <Section id="media" surface="raised" labelledBy="media-h">
         <Container>
           <SectionHeading
             id="media-h"
@@ -402,9 +398,9 @@ export default function DesignSystemPage() {
             <Spec label="Tier 2 — staggered reveal (grids, schedule rows)">
               <RevealGroup className="bg-hairline grid gap-px sm:grid-cols-3">
                 {['Morning practice', 'Personal sessions', 'Kids programme'].map((t) => (
-                  <RevealItem key={t} className="bg-ivory p-8">
+                  <RevealItem key={t} className="bg-ink p-8">
                     <p className="text-h3 font-display">{t}</p>
-                    <p className="text-small text-stone mt-3">
+                    <p className="text-small text-bone-dim mt-3">
                       Placeholder — real programme copy replaces this.
                     </p>
                   </RevealItem>
@@ -424,7 +420,7 @@ export default function DesignSystemPage() {
                 ].map(([k, v]) => (
                   <div key={k} className="rule-t pt-3">
                     <dt className="text-small font-medium">{k}</dt>
-                    <dd className="text-micro nums-tabular text-stone">{v}</dd>
+                    <dd className="text-micro nums-tabular text-bone-dim">{v}</dd>
                   </div>
                 ))}
               </dl>
@@ -434,7 +430,7 @@ export default function DesignSystemPage() {
       </Section>
 
       {/* ---------------------------------------------------------------- */}
-      <Section id="forms" surface="alt" labelledBy="forms-h">
+      <Section id="forms" surface="raised" labelledBy="forms-h">
         <Container width="measure">
           <SectionHeading
             id="forms-h"
@@ -514,14 +510,14 @@ export default function DesignSystemPage() {
       </Section>
 
       {/* ---------------------------------------------------------------- */}
-      <Section surface="moss" spacing="loose">
+      <Section surface="deep" spacing="loose">
         <Container>
           <Reveal>
             <Mark className="mb-6" />
-            <p className="text-display-2 font-display text-ivory max-w-[18ch]">
+            <p className="text-display-2 font-display max-w-[18ch]">
               Phase 2 complete. The homepage is next.
             </p>
-            <p className="text-lead max-w-measure text-moss-200 mt-6">
+            <p className="text-lead max-w-measure text-bone-dim mt-6">
               Every token, primitive and state above is in place. Nothing on this page is
               a real business claim.
             </p>

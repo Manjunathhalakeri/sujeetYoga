@@ -14,6 +14,6 @@ export function Rule({ className }: { className?: string }) {
  */
 export function Mark({ className }: { className?: string }) {
   return (
-    <span aria-hidden="true" className={cn('bg-clay-400 block h-px w-8', className)} />
+    <span aria-hidden="true" className={cn('bg-clay-deep block h-px w-8', className)} />
   );
 }

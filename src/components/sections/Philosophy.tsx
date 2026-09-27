@@ -63,7 +63,7 @@ export function Philosophy() {
             <Reveal>
               <div className="space-y-6">
                 {philosophy.body.map((paragraph) => (
-                  <p key={paragraph} className="max-w-copy text-stone">
+                  <p key={paragraph} className="max-w-copy text-bone-dim">
                     {paragraph}
                   </p>
                 ))}

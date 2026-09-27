@@ -21,7 +21,7 @@ export function FinalCta() {
   const { cta } = home;
 
   return (
-    <Section id="enquire" surface="alt" spacing="loose" labelledBy="cta-heading">
+    <Section id="enquire" surface="raised" spacing="loose" labelledBy="cta-heading">
       <Container>
         <div className="grid lg:grid-cols-12 lg:gap-x-10">
           <div className="lg:col-span-8">
@@ -33,7 +33,7 @@ export function FinalCta() {
               >
                 {cta.heading}
               </h2>
-              <p className="text-lead text-stone mt-7 max-w-[42ch]">{cta.lead}</p>
+              <p className="text-lead text-bone-dim mt-7 max-w-[42ch]">{cta.lead}</p>
 
               <div className="mt-11 flex flex-wrap items-center gap-4">
                 <Button

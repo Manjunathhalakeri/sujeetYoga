@@ -28,7 +28,7 @@ export function Instructor() {
   return (
     <Section
       id="instructor"
-      surface="alt"
+      surface="raised"
       spacing="loose"
       labelledBy="instructor-heading"
     >
@@ -50,12 +50,12 @@ export function Instructor() {
                 {instructor.facts.map((fact) => (
                   <div
                     key={fact.label}
-                    className="bg-ivory-300 flex items-baseline justify-between gap-6 py-3"
+                    className="bg-ink-raised flex items-baseline justify-between gap-6 py-3"
                   >
-                    <dt className="text-eyebrow text-stone-400 uppercase">
+                    <dt className="text-eyebrow text-bone-faint uppercase">
                       {fact.label}
                     </dt>
-                    <dd className="text-small text-charcoal">{fact.value}</dd>
+                    <dd className="text-small text-bone">{fact.value}</dd>
                   </div>
                 ))}
               </dl>
@@ -78,7 +78,7 @@ export function Instructor() {
             <Reveal delay={0.06}>
               <div className="mt-10 space-y-6">
                 {instructor.body.map((paragraph) => (
-                  <p key={paragraph} className="max-w-copy text-stone">
+                  <p key={paragraph} className="max-w-copy text-bone-dim">
                     {paragraph}
                   </p>
                 ))}
@@ -88,7 +88,7 @@ export function Instructor() {
                 <ul className="mt-8 flex flex-wrap gap-2">
                   {instructor.credentials.map((c) => (
                     <li key={c}>
-                      <Badge tone="moss">{c}</Badge>
+                      <Badge tone="sage">{c}</Badge>
                     </li>
                   ))}
                 </ul>

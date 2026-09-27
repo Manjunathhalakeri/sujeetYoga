@@ -50,8 +50,8 @@ function ContactRow({
 }) {
   return (
     <div className="rule-b py-5">
-      <div className="text-eyebrow flex items-center gap-2 text-stone-400 uppercase">
-        <span aria-hidden="true" className="text-stone-400">
+      <div className="text-eyebrow text-bone-faint flex items-center gap-2 uppercase">
+        <span aria-hidden="true" className="text-bone-faint">
           {icon}
         </span>
         {label}
@@ -60,7 +60,7 @@ function ContactRow({
         {href ? (
           <a
             href={href}
-            className="link-underline hover:text-moss tap-44 rounded-xs transition-colors"
+            className="link-underline hover:text-sage tap-44 rounded-xs transition-colors"
             {...(href.startsWith('http')
               ? { rel: 'noopener noreferrer', target: '_blank' }
               : {})}
@@ -92,7 +92,7 @@ export default function ContactPage() {
               <Mark className="mx-auto mb-5" />
               <Eyebrow className="mb-4">Contact</Eyebrow>
               <h1 className="text-display-1 font-display text-balance">Say hello.</h1>
-              <p className="text-lead text-stone mx-auto mt-7 max-w-[42ch]">
+              <p className="text-lead text-bone-dim mx-auto mt-7 max-w-[42ch]">
                 Placeholder. A warm, plain invitation to get in touch — no experience
                 assumed, no obligation implied, and a note on how quickly a reply usually
                 comes.
@@ -103,7 +103,7 @@ export default function ContactPage() {
       </Section>
 
       {/* ---------------- Options rail + form -------------------------------- */}
-      <Section surface="alt" spacing="loose">
+      <Section surface="raised" spacing="loose">
         <Container>
           <div className="gap-block grid lg:grid-cols-12 lg:gap-x-10">
             {/* Direct options */}
@@ -112,7 +112,7 @@ export default function ContactPage() {
                 <h2 className="text-h3 font-display">
                   Reach {siteConfig.personName} directly
                 </h2>
-                <p className="text-small text-stone mt-3 max-w-[34ch]">
+                <p className="text-small text-bone-dim mt-3 max-w-[34ch]">
                   Placeholder. The quickest ways to get an answer.
                 </p>
 
@@ -129,15 +129,15 @@ export default function ContactPage() {
                       Message on WhatsApp
                     </Button>
                   ) : (
-                    <div className="rule-t rule-b bg-ivory-100/60 px-4 py-5">
-                      <div className="text-eyebrow flex items-center gap-2 text-stone-400 uppercase">
+                    <div className="rule-t rule-b bg-ink-raised/60 px-4 py-5">
+                      <div className="text-eyebrow text-bone-faint flex items-center gap-2 uppercase">
                         <MessageCircle size={13} strokeWidth={1.75} aria-hidden="true" />
                         WhatsApp
                       </div>
                       <p className="mt-3">
                         <Badge tone="placeholder">TODO: WhatsApp number</Badge>
                       </p>
-                      <p className="text-micro mt-3 max-w-[32ch] text-stone-400">
+                      <p className="text-micro text-bone-faint mt-3 max-w-[32ch]">
                         No number has been supplied, so no WhatsApp link is shown. Add it
                         to <code>siteConfig.contact.whatsapp</code> and this becomes a
                         direct CTA.
@@ -185,7 +185,7 @@ export default function ContactPage() {
                 <h2 className="text-display-2 font-display max-w-[16ch] text-balance">
                   Or send a message.
                 </h2>
-                <p className="text-small text-stone mt-5 max-w-[44ch]">
+                <p className="text-small text-bone-dim mt-5 max-w-[44ch]">
                   Placeholder. Tell us a little about what you are looking for — there is
                   no wrong answer, and no experience is assumed.
                 </p>
@@ -211,7 +211,7 @@ export default function ContactPage() {
         <Container>
           <Reveal>
             <div className="max-w-measure mx-auto text-center">
-              <h2 className="text-eyebrow text-stone-400 uppercase">Finding us</h2>
+              <h2 className="text-eyebrow text-bone-faint uppercase">Finding us</h2>
               {address ? (
                 <p className="text-lead mt-6">{address}</p>
               ) : (
@@ -219,7 +219,7 @@ export default function ContactPage() {
                   <p className="mt-6">
                     <Badge tone="placeholder">TODO: address &amp; directions</Badge>
                   </p>
-                  <p className="text-small text-stone mx-auto mt-5 max-w-[40ch]">
+                  <p className="text-small text-bone-dim mx-auto mt-5 max-w-[40ch]">
                     No address is published because none has been supplied. A map will be
                     added here once the location is confirmed.
                   </p>
