@@ -71,6 +71,39 @@ export const revealVars = {
 } as const;
 
 /**
+ * MEDIA CONDITIONS — one object, used by every animated component.
+ *
+ * Pass this whole object to `gsap.matchMedia()` and read booleans off
+ * `ctx.conditions`. Two rules come out of it:
+ *
+ *   reduced   never move anything that is not a fade
+ *   desktop   pinning and scrubbing are DESKTOP-ONLY
+ *
+ * Why pinning is gated on width rather than applied everywhere: a pinned
+ * section holds the page still for a viewport-height or more. On a large screen
+ * that reads as deliberate pacing. On a phone — where this site's visitors
+ * mostly are, often on patchy mobile data, usually deciding whether to send a
+ * WhatsApp — a page that will not scroll reads as broken, and four of them in a
+ * row reads as a site to leave. Phones get the plain entrance reveals instead.
+ *
+ * `motion` and `reduced` between them always match, so the handler always runs
+ * and `desktop` can be read as a plain boolean inside it. A conditions object
+ * where nothing matches would mean the handler never runs at all.
+ */
+export const MOTION_QUERIES = {
+  motion: '(prefers-reduced-motion: no-preference)',
+  reduced: '(prefers-reduced-motion: reduce)',
+  /** Matches Tailwind's `lg` breakpoint. */
+  desktop: '(min-width: 64rem)',
+} as const;
+
+export interface MotionConditions {
+  motion: boolean;
+  reduced: boolean;
+  desktop: boolean;
+}
+
+/**
  * Recalculate trigger positions once webfonts have actually landed.
  *
  * next/font uses `display: swap`, so the first paint measures against the

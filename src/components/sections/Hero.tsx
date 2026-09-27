@@ -6,7 +6,14 @@ import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { DURATION, EASE, gsap, useGSAP } from '@/lib/motion';
+import {
+  DURATION,
+  EASE,
+  MOTION_QUERIES,
+  gsap,
+  useGSAP,
+  type MotionConditions,
+} from '@/lib/motion';
 import { Mandala } from '@/components/art/Mandala';
 import { images } from '@/content/assets';
 import { home } from '@/content/home';
@@ -44,66 +51,65 @@ export function Hero() {
     () => {
       const mm = gsap.matchMedia();
 
-      mm.add(
-        {
-          motion: '(prefers-reduced-motion: no-preference)',
-          reduced: '(prefers-reduced-motion: reduce)',
-        },
-        (ctx) => {
-          const { reduced } = ctx.conditions as { reduced: boolean };
-          const tl = gsap.timeline({ defaults: { ease: EASE } });
+      mm.add(MOTION_QUERIES, (ctx) => {
+        const { reduced, desktop } = ctx.conditions as unknown as MotionConditions;
+        const tl = gsap.timeline({ defaults: { ease: EASE } });
 
-          if (reduced) {
-            // Everything resolves as a plain fade, nothing moves.
-            tl.fromTo(
-              [
-                '[data-hero-eyebrow]',
-                '[data-hero-line]',
-                '[data-hero-body]',
-                '[data-hero-media]',
-              ],
-              { autoAlpha: 0 },
-              { autoAlpha: 1, duration: DURATION.quick, stagger: 0.04 },
-            );
-            return;
-          }
-
+        if (reduced) {
+          // Everything resolves as a plain fade, nothing moves.
           tl.fromTo(
-            '[data-hero-eyebrow]',
-            { autoAlpha: 0 },
-            { autoAlpha: 1, duration: DURATION.base },
-            0,
-          )
-            // Each line rises out of its own mask. yPercent, not y, so the
-            // travel scales with the line height rather than a fixed pixel.
-            .fromTo(
+            [
+              '[data-hero-eyebrow]',
               '[data-hero-line]',
-              { yPercent: 110 },
-              { yPercent: 0, duration: DURATION.slow, stagger: 0.09 },
-              0.15,
-            )
-            .fromTo(
               '[data-hero-body]',
-              { autoAlpha: 0, y: 12 },
-              { autoAlpha: 1, y: 0, duration: DURATION.base },
-              0.5,
-            )
-            // Mask and scale share a start and a curve, so they read as one
-            // gesture rather than two effects.
-            .fromTo(
               '[data-hero-media]',
-              { clipPath: 'inset(0% 0% 100% 0%)' },
-              { clipPath: 'inset(0% 0% 0% 0%)', duration: DURATION.reveal },
-              0.1,
-            )
-            .fromTo(
-              '[data-hero-media-inner]',
-              { scale: 1.06 },
-              { scale: 1, duration: DURATION.reveal },
-              0.1,
-            );
+            ],
+            { autoAlpha: 0 },
+            { autoAlpha: 1, duration: DURATION.quick, stagger: 0.04 },
+          );
+          return;
+        }
 
-          /* ---------------- scroll choreography (P4) ----------------
+        tl.fromTo(
+          '[data-hero-eyebrow]',
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: DURATION.base },
+          0,
+        )
+          // Each line rises out of its own mask. yPercent, not y, so the
+          // travel scales with the line height rather than a fixed pixel.
+          .fromTo(
+            '[data-hero-line]',
+            { yPercent: 110 },
+            { yPercent: 0, duration: DURATION.slow, stagger: 0.09 },
+            0.15,
+          )
+          .fromTo(
+            '[data-hero-body]',
+            { autoAlpha: 0, y: 12 },
+            { autoAlpha: 1, y: 0, duration: DURATION.base },
+            0.5,
+          )
+          // Mask and scale share a start and a curve, so they read as one
+          // gesture rather than two effects.
+          .fromTo(
+            '[data-hero-media]',
+            { clipPath: 'inset(0% 0% 100% 0%)' },
+            { clipPath: 'inset(0% 0% 0% 0%)', duration: DURATION.reveal },
+            0.1,
+          )
+          .fromTo(
+            '[data-hero-media-inner]',
+            { scale: 1.06 },
+            { scale: 1, duration: DURATION.reveal },
+            0.1,
+          );
+
+        // Pinning is desktop-only — see MOTION_QUERIES. Phones keep the
+        // entrance timeline above and nothing else.
+        if (!desktop) return;
+
+        /* ---------------- scroll choreography (P4) ----------------
              The hero pins for 70% of a viewport. Short on purpose: a hero that
              holds for a full screen reads as a broken scroll on the very first
              gesture, which is the worst possible first impression.
@@ -112,40 +118,39 @@ export function Hero() {
              fades — they separate, which is what sells depth. ease 'none' on a
              scrub is mandatory; any other curve breaks the 1:1 mapping between
              scroll position and progress. */
-          gsap
-            .timeline({
-              defaults: { ease: 'none' },
-              scrollTrigger: {
-                trigger: root.current,
-                start: 'top top',
-                end: '+=70%',
-                pin: true,
-                scrub: 0.6,
-                // Lower refreshes FIRST. The hero is the first section on the
-                // page and its pin spacer changes the position of everything
-                // below it, so it must be recalculated before they are.
-                // Everything else leaves this at the default 0.
-                refreshPriority: -1,
-              },
-            })
-            // Animate children of the pinned element, never the pinned element.
-            .to('[data-hero-media-inner]', { yPercent: -12, scale: 1.06 }, 0)
-            .to('[data-hero-type]', { y: 40, autoAlpha: 0.15 }, 0);
+        gsap
+          .timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: {
+              trigger: root.current,
+              start: 'top top',
+              end: '+=70%',
+              pin: true,
+              scrub: 0.6,
+              // Lower refreshes FIRST. The hero is the first section on the
+              // page and its pin spacer changes the position of everything
+              // below it, so it must be recalculated before they are.
+              // Everything else leaves this at the default 0.
+              refreshPriority: -1,
+            },
+          })
+          // Animate children of the pinned element, never the pinned element.
+          .to('[data-hero-media-inner]', { yPercent: -12, scale: 1.06 }, 0)
+          .to('[data-hero-type]', { y: 40, autoAlpha: 0.15 }, 0);
 
-          /* Mandala: one very slow revolution, 4 minutes per turn.
+        /* Mandala: one very slow revolution, 4 minutes per turn.
              Ambient motion, which the system otherwise forbids — included at
              explicit request. `ease: 'none'` so it never appears to speed up or
              slow down, which is what would make it noticeable. It lives only in
              the no-preference branch, so reduced motion gets a static mandala. */
-          gsap.to('[data-hero-mandala]', {
-            rotation: 360,
-            duration: 240,
-            repeat: -1,
-            ease: 'none',
-            transformOrigin: '50% 50%',
-          });
-        },
-      );
+        gsap.to('[data-hero-mandala]', {
+          rotation: 360,
+          duration: 240,
+          repeat: -1,
+          ease: 'none',
+          transformOrigin: '50% 50%',
+        });
+      });
 
       return () => mm.revert();
     },
